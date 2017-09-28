@@ -1,0 +1,33 @@
+{
+  "name": "chriskonnertz/translation-factory",
+  "description": "Tool for the Laravel framework that helps to create and manage translations",
+  "keywords": ["laravel", "translation", "translate", "language", "create", "manage", "ai", "machine", "deepl", "deeply"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Chris Konnertz"
+    }
+  ],
+  "require": {
+    "php": ">=7.0.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "5.7"
+  },
+  "autoload": {
+    "psr-0": {
+      "ChrisKonnertz\\DeepLy": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "ChrisKonnertz\\TranslationFactory\\Integration\\TranslationFactoryServiceProvider"
+      ],
+      "aliases": {
+        "DeepLy": "ChrisKonnertz\\TranslationFactory\\Integration\\TranslationFactoryFacade"
+      }
+    }
+  },
+  "minimum-stability": "dev"
+}
