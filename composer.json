@@ -16,7 +16,7 @@
   },
   "autoload": {
     "psr-0": {
-      "ChrisKonnertz\\DeepLy": "src/"
+      "ChrisKonnertz\\TranslationFactory": "src/"
     }
   },
   "extra": {
