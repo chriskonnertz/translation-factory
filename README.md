@@ -6,6 +6,12 @@ Tool for the Laravel framework that helps to create and manage translations
 
 ## Installation
 
+Through [Composer](https://getcomposer.org/):
+
+```
+composer require chriskonnertz/translation-factory
+```
+
 > This library requires PHP 7.0 or higher with the cURL extension and Laravel 5.5.
 
 This library supports Laravel's 
