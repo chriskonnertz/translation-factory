@@ -14,7 +14,9 @@ interface UserManagerInterface
     public function isLoggedIn();
 
     /**
-     * Returns the current user object or null
+     * Returns the current user object or null.
+     * Call getCurrentUserId() instead if you only
+     * want to to get the ID of the current user.
      *
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */

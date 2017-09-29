@@ -26,6 +26,8 @@ composer require chriskonnertz/translation-factory
 This library makes use of Laravel's 
 [package auto-discovery](https://medium.com/@taylorotwell/package-auto-discovery-in-laravel-5-5-ea9e3ab20518)
  so it will be auto-detected.
+ 
+After setup is complete, navigate to `http://<your-domain>/translation-factory` to start.
 
 ## Prepare Laravel
 
