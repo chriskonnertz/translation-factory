@@ -29,4 +29,11 @@ interface UserManagerInterface
      */
     public function getCurrentUserId();
 
+    /**
+     * Logs out the current user
+     *
+     * @return void
+     */
+    public function logoutCurrentUser();
+
 }

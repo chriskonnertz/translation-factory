@@ -4,6 +4,10 @@ namespace ChrisKonnertz\TranslationFactory\User;
 
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * The UserManager class is an abstraction of the User facade.
+ * It can be replaced by a custom user manager in the config file.
+ */
 class UserManager implements UserManagerInterface
 {
 
@@ -38,6 +42,16 @@ class UserManager implements UserManagerInterface
     public function getCurrentUserId()
     {
         return Auth::id();
+    }
+
+    /**
+     * Logs out the current user
+     *
+     * @return void
+     */
+    public function logoutCurrentUser()
+    {
+        Auth::logout();
     }
 
 }
