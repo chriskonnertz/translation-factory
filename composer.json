@@ -9,7 +9,8 @@
     }
   ],
   "require": {
-    "php": ">=7.0.0"
+    "php": ">=7.0.0",
+    "chriskonnertz/deeply": "^1.2"
   },
   "require-dev": {
     "phpunit/phpunit": "5.7"
