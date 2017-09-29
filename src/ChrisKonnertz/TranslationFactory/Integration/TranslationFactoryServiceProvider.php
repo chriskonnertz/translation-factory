@@ -16,7 +16,9 @@ class TranslationFactoryServiceProvider extends ServiceProvider
     public function boot()
     {
         // Register the config file for being published
-        $this->publishes([__DIR__ . '/../../../../config/config.php' => config_path('translation-factory.php')]);
+        $this->publishes([
+            __DIR__ . '/../../../../config/config.php' => config_path('translation-factory.php')
+        ], 'config');
     }
 
     /**
