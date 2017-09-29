@@ -25,12 +25,22 @@ class TranslationFactoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerRoutes();
+        $this->registerViews();
 
+        $this->registerRoutes();
+    }
+
+    /**
+     * Register the views directory
+     *
+     * @eturn void
+     */
+    protected function registerViews()
+    {
+        /** @var \Illuminate\View\Factory $view */
         $view = $this->app->get('view');
 
-        // Register views directory
-        \View::addNamespace('translationFactory', realpath(__DIR__.'/../resources/views'));
+        $view->addNamespace('translationFactory', realpath(__DIR__.'/../resources/views'));
     }
 
     /**
