@@ -5,6 +5,12 @@
 Translation Factory is a tool for the Laravel framework that helps to create and manage translations.
 Especially it helps to coordinate multiple translators, aiding them with AI translations.
 
+```
+╔═══════════════════════════════════════╗
+║ Work in progress - not ready for use! ║
+╚═══════════════════════════════════════╝
+```
+
 > Note: "Factory" does not mean the pattern here but rather this: 🏭
 
 ## Installation
@@ -24,7 +30,8 @@ This library makes use of Laravel's
 ## Prepare Laravel
 
 This package supports user authentication. Per default it depends on Laravel's built-in user authentication system.
-If you have a fresh installation of Laravel follow these steps to prepare it:
+if you already use Laravel's user authentication then you can skip this section. 
+But if you have a fresh installation of Laravel follow these steps to prepare it:
 
 1. Via a console run `php artisan make:auth` to create resources like a controller and views
 2. Then run `php artisan migrate` to prepare the database
