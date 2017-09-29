@@ -8,6 +8,18 @@ class TranslationFactoryController extends BaseController
 {
 
     /**
+     * TranslationFactoryController constructor.
+     *
+     * @param \Illuminate\Config\Repository $config
+     */
+    public function __construct(\Illuminate\Config\Repository $config)
+    {
+        if ($config->get('translation-factory.user_authentication')) {
+            $this->middleware('auth');
+        }
+    }
+
+    /**
      * @param \Illuminate\Config\Repository $config
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Exception

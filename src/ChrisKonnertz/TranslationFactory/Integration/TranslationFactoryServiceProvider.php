@@ -56,15 +56,8 @@ class TranslationFactoryServiceProvider extends ServiceProvider
         /** @var \Illuminate\Routing\Router $router */
         $router = $this->app->get('router');
 
-        /** @var \Illuminate\Config\Repository $config */
-        $config = $this->app->get('config');
-
         $controllerName = TranslationFactoryController::class;
-        $route = $router->get('translation-factory', $controllerName . '@index');
-
-        if ($config->get('translation-factory.user_authentication')) {
-            $route->middleware('auth');
-        }
+        $router->get('translation-factory', $controllerName . '@index');
     }
 
 }
