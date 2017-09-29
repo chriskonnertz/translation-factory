@@ -6,9 +6,9 @@ Translation Factory is a tool for the Laravel framework that helps to create and
 Especially it helps to coordinate multiple translators, aiding them with AI translations.
 
 ```
-╔═══════════════════════════════════════╗
-║ Work in progress - not ready for use! ║
-╚═══════════════════════════════════════╝
+╔══════════════════════════════════════════╗
+║ ⚠ Work in progress - not ready for use! ║
+╚══════════════════════════════════════════╝
 ```
 
 > Note: "Factory" does not mean the pattern here but rather this: 🏭
