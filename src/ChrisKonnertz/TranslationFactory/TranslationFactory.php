@@ -2,6 +2,8 @@
 
 namespace ChrisKonnertz\TranslationFactory;
 
+use ChrisKonnertz\TranslationFactory\IO\TranslationReaderInterface;
+use ChrisKonnertz\TranslationFactory\IO\TranslationWriterInterface;
 use ChrisKonnertz\TranslationFactory\User\UserManagerInterface;
 use Illuminate\Config\Repository;
 
@@ -24,6 +26,16 @@ class TranslationFactory
     protected $userManager;
 
     /**
+     * @var TranslationReaderInterface
+     */
+    protected $translationReader;
+
+    /**
+     * @var TranslationWriterInterface
+     */
+    protected $translationWriter;
+
+    /**
      * TranslationFactory constructor.
      *
      * @param Repository $config
@@ -32,6 +44,8 @@ class TranslationFactory
     {
         $this->config = $config;
         $this->userManager = $this->createUserManager();
+        $this->translationReader = $this->createTranslationReader();
+        $this->translationWriter = $this->createTranslationWriter();
     }
 
     /**
@@ -49,7 +63,35 @@ class TranslationFactory
     }
 
     /**
-     * Getter for the user manager object
+     * Create a new translation reader and return it
+     *
+     * @return TranslationReaderInterface
+     */
+    protected function createTranslationReader()
+    {
+        $className = $this->config->get(self::CONFIG_NAME.'.translation_reader');
+
+        $object = app()->make($className);
+
+        return $object;
+    }
+
+    /**
+     * Create a new translation writer and return it
+     *
+     * @return TranslationWriterInterface
+     */
+    protected function createTranslationWriter()
+    {
+        $className = $this->config->get(self::CONFIG_NAME.'.translation_writer');
+
+        $object = app()->make($className);
+
+        return $object;
+    }
+
+    /**
+     * Getter for the user manager
      *
      * @return UserManagerInterface
      */
@@ -59,13 +101,53 @@ class TranslationFactory
     }
 
     /**
-     * Setter for the user manager object
+     * Setter for the user manager
      *
      * @param UserManagerInterface $userManager
      */
     public function setUserManager(UserManagerInterface $userManager)
     {
         $this->userManager = $userManager;
+    }
+
+    /**
+     * Getter for the translation reader
+     *
+     * @return TranslationReaderInterface
+     */
+    public function getTranslationReader() : TranslationReaderInterface
+    {
+        return $this->translationReader;
+    }
+
+    /**
+     * Setter for the translation reader
+     *
+     * @param TranslationReaderInterface $translationReader
+     */
+    public function setTranslationReader(TranslationReaderInterface $translationReader)
+    {
+        $this->translationReader = $translationReader;
+    }
+
+    /**
+     * Getter for the translation writer
+     *
+     * @return TranslationWriterInterface
+     */
+    public function getTranslationWriter() : TranslationWriterInterface
+    {
+        return $this->translationWriter;
+    }
+
+    /**
+     * Setter for the translation writer
+     *
+     * @param TranslationWriterInterface $translationWriter
+     */
+    public function setTranslationWriter(TranslationWriterInterface $translationWriter)
+    {
+        $this->translationWriter = $translationWriter;
     }
 
 }

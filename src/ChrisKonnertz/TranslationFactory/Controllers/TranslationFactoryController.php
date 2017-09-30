@@ -37,7 +37,10 @@ class TranslationFactoryController extends BaseController
             );
         }
 
-        $translationFactory = app('translation-factory');
+        /** @var TranslationFactory $translationFactory */
+        $translationFactory = app()->get('translation-factory');
+
+        $loggedIn = $translationFactory->getUserManager()->isLoggedIn();
 
         return view('translationFactory::page_base');
     }

@@ -2,7 +2,7 @@
 
 namespace ChrisKonnertz\TranslationFactory\IO;
 
-class TranslationReader
+class TranslationReader implements TranslationReaderInterface
 {
 
     public function readAll()

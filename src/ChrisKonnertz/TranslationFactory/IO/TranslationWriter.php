@@ -2,7 +2,7 @@
 
 namespace ChrisKonnertz\TranslationFactory\IO;
 
-class TranslationWriter
+class TranslationWriter implements TranslationWriterInterface
 {
 
     public function writeAll()

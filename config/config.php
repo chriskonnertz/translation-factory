@@ -25,4 +25,30 @@ return [
     */
     'user_manager' => \ChrisKonnertz\TranslationFactory\User\UserManager::class,
 
+    /*
+    |--------------------------------------------------------------------------
+    | Translation Reader Class
+    |--------------------------------------------------------------------------
+    |
+    | This is the full qualified name of the class that is used to build
+    | the translation reader object. If you want to use something else
+    | than Laravel's default translation system you have to write
+    | your own user reader class and replace the current value
+    |
+    */
+    'translation_reader' => \ChrisKonnertz\TranslationFactory\IO\TranslationReader::class,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Translation Writer Class
+    |--------------------------------------------------------------------------
+    |
+    | This is the full qualified name of the class that is used to build
+    | the translation writer object. If you want to use something else
+    | than Laravel's default translation system you have to write
+    | your own user writer class and replace the current value
+    |
+    */
+    'translation_write' => \ChrisKonnertz\TranslationFactory\IO\TranslationWriter::class,
+
 ];
