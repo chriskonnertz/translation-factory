@@ -3,6 +3,7 @@
 namespace ChrisKonnertz\TranslationFactory\Integration;
 
 use ChrisKonnertz\TranslationFactory\Controllers\TranslationFactoryController;
+use ChrisKonnertz\TranslationFactory\TranslationFactory;
 use Illuminate\Support\ServiceProvider;
 
 class TranslationFactoryServiceProvider extends ServiceProvider
@@ -17,7 +18,7 @@ class TranslationFactoryServiceProvider extends ServiceProvider
     {
         // Register the config file for being published
         $this->publishes([
-            __DIR__ . '/../../../../config/config.php' => config_path('translation-factory.php')
+            __DIR__ . '/../../../../config/config.php' => config_path('translation_factory.php')
         ], 'config');
     }
 
@@ -28,6 +29,11 @@ class TranslationFactoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind('translation-factory', function($app)
+        {
+            return new TranslationFactory($app['config']);
+        });
+
         $this->registerViews();
 
         $this->registerRoutes();
