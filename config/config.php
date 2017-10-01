@@ -49,6 +49,6 @@ return [
     | your own user writer class and replace the current value
     |
     */
-    'translation_write' => \ChrisKonnertz\TranslationFactory\IO\TranslationWriter::class,
+    'translation_writer' => \ChrisKonnertz\TranslationFactory\IO\TranslationWriter::class,
 
 ];
