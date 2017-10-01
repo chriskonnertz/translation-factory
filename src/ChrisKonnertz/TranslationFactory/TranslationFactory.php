@@ -11,6 +11,11 @@ class TranslationFactory
 {
 
     /**
+     * The version number
+     */
+    const VERSION = '0.0.1-dev';
+
+    /**
      * Name of the config file (without extension) and name of the config namespace
      */
     const CONFIG_NAME = 'translation_factory';
