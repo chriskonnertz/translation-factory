@@ -22,6 +22,8 @@ class TranslationFactoryController extends BaseController
     }
 
     /**
+     * Index page of the package
+     *
      * @param Repository $config
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Exception
@@ -43,6 +45,21 @@ class TranslationFactoryController extends BaseController
         $loggedIn = $translationFactory->getUserManager()->isLoggedIn();
 
         return view('translationFactory::page_base');
+    }
+
+    /**
+     * Logs the current user out and redirects to website
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function logout()
+    {
+        /** @var TranslationFactory $translationFactory */
+        $translationFactory = app()->get('translation-factory');
+
+        $translationFactory->getUserManager()->logoutCurrentUser();
+
+        return redirect(url('/'));
     }
 
 }

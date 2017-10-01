@@ -64,6 +64,8 @@ class TranslationFactoryServiceProvider extends ServiceProvider
 
         $controllerName = TranslationFactoryController::class;
         $router->get('translation-factory', $controllerName . '@index');
+
+        $router->get('translation-factory/logout', $controllerName . '@logout');
     }
 
 }
