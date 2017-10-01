@@ -19,24 +19,45 @@
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+    <style>
+
+    </style>
 </head>
 <body>
-
-    <header id="header">
-
-    </header>
-
     <div class="container">
-        <div class="columns">
-            <div class="column col-2">col-2</div>
-            <div class="column col-10">col-10</div>
-        </div>
-        <section class="page">
-
+        <aside id="sidebar">
+            <div class="logo">
+                TranslationFactory
+            </div>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+                    <li>
+                        <a href="#">Website</a>
+                    </li>
+                    <li>
+                        <a href="#">Support</a>
+                    </li>
+                    <li>
+                        <a href="#">Logout</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        <section id="content">
+            content
         </section>
     </div>
-    <footer id="footer">
 
+    <footer id="footer">
+        <div>
+            Created by <a href="#">Chris Konnertz</a> 2017. Licensed under the MIT License. More:
+            <a href="#">GitHub</a>
+        </div>
+    </footer>
     </footer>
 </body>
 </html>
