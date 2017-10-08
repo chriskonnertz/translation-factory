@@ -42,7 +42,8 @@ class TranslationReader implements TranslationReaderInterface
     {
         $path = app()->langPath();
 
-        $translationBags = $this->loadPath($path);
+        $baseLanguage = 'en'; // TODO change
+        $translationBags = $this->loadPath($path, $baseLanguage);
 
         return $translationBags;
     }
@@ -51,11 +52,15 @@ class TranslationReader implements TranslationReaderInterface
      * Loads and returns translations from all files in a given directory and its subdirectories.
      *
      * @param string $basePath
-     * @return TranslationBag[]
+     * @param        $baseLanguage
+     * @return array|TranslationBag[]
      * @throws \Exception
      */
-    protected function loadPath(string $basePath) : array
+    protected function loadPath(string $basePath, string $baseLanguage) : array
     {
+        // TODO this is just a first implementation, later on it might make sense to change it
+        $basePath .= DIRECTORY_SEPARATOR.$baseLanguage;
+
         /** @var \Symfony\Component\Finder\SplFileInfo[] $files */
         $files = $this->filesystem->allFiles($basePath);
 
@@ -68,7 +73,7 @@ class TranslationReader implements TranslationReaderInterface
                 throw new \Exception('Translation file "'.$file->getPathname().'" does not contain an array');
             }
 
-            $translationBags[] = new TranslationBag($content, $file->getPathname());
+            $translationBags[] = new TranslationBag($content, $basePath.DIRECTORY_SEPARATOR, $file->getPathname());
         }
 
         return $translationBags;

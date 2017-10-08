@@ -11,7 +11,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="locale" content="{!! Config::get('app.locale') !!}">
 
-    <title>Laravel Translation Factory</title>
+    <title>Laravel Translation Factory - @yield('title')</title>
 
     <link rel="icon" type="image/png" href="{!! asset('img/favicon_180.png') !!}"><!-- Opera Speed Dial Icon -->
     <link rel="shortcut icon" type="picture/x-icon" href="{!! asset('favicon.png') !!}">
@@ -48,7 +48,7 @@
         }
         #nav a {
             display: block;
-            padding: 2px 0px;
+            padding: 5px 0;
             color: #999;
             font-weight: bold;
         }
@@ -60,14 +60,36 @@
         }
         #content {
             min-height: 100vh;
-            margin-bottom: 0px;
-            padding: 16px 16px 68px 16px; /* 68px = 16px + 52px (=footer height) */
+            margin-bottom: 0;
+            padding: 1rem 4rem 4rem 4rem; /* padding-bottom = 1rem + 3rem(=footer height) */
         }
         #footer {
             position: relative;
-            margin-top: -52px;
-            padding: 16px;
+            margin-top: -3rem; /* = total height of the footer */
+            padding: 1rem 4rem;
+            line-height: 1rem;
             color: #999;
+        }
+
+        .bag-tile-wrapper {
+            box-sizing: border-box;
+            float: left;
+            width: 33%;
+            padding-right: 1rem;
+        }
+        .bag-tile {
+            display: block;
+            border: 1px solid #EEE;
+            margin: 1rem 0;
+            padding: 1rem;
+        }
+        .bag-tile .icon-wrapper {
+            width: 2rem;
+            height: 2rem;
+            padding: 0.45rem 0;
+            background-color: #f4645f;
+            color: white;
+            text-align: center;
         }
     </style>
 </head>
@@ -97,7 +119,9 @@
 
     <div id="main-container">
         <section id="content">
-            content
+            @section('content')
+                Hello, world!
+            @show
         </section>
 
         <footer id="footer">

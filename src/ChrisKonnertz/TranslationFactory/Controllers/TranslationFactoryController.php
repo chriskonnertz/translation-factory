@@ -42,14 +42,13 @@ class TranslationFactoryController extends BaseController
         /** @var TranslationFactory $translationFactory */
         $translationFactory = app()->get('translation-factory');
 
+        // TODO Implement an action when the user is not logged in?
         $loggedIn = $translationFactory->getUserManager()->isLoggedIn();
 
-
         $reader = $translationFactory->getTranslationReader();
-        $reader->readAll();
+        $translationBags = $reader->readAll();
 
-
-        return view('translationFactory::page_base');
+        return view('translationFactory::home', compact('translationBags'));
     }
 
     /**
