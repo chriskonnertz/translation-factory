@@ -58,7 +58,7 @@ class TranslationFactory
      *
      * @return UserManagerInterface
      */
-    protected function createUserManager()
+    protected function createUserManager() : UserManagerInterface
     {
         $className = $this->config->get(self::CONFIG_NAME.'.user_manager');
 
@@ -72,7 +72,7 @@ class TranslationFactory
      *
      * @return TranslationReaderInterface
      */
-    protected function createTranslationReader()
+    protected function createTranslationReader() : TranslationReaderInterface
     {
         $className = $this->config->get(self::CONFIG_NAME.'.translation_reader');
 
@@ -86,7 +86,7 @@ class TranslationFactory
      *
      * @return TranslationWriterInterface
      */
-    protected function createTranslationWriter()
+    protected function createTranslationWriter() : TranslationWriterInterface
     {
         $className = $this->config->get(self::CONFIG_NAME.'.translation_writer');
 

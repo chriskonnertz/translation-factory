@@ -44,6 +44,11 @@ class TranslationFactoryController extends BaseController
 
         $loggedIn = $translationFactory->getUserManager()->isLoggedIn();
 
+
+        $reader = $translationFactory->getTranslationReader();
+        $reader->readAll();
+
+
         return view('translationFactory::page_base');
     }
 
