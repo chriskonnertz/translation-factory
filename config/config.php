@@ -12,7 +12,7 @@ return [
     |
     */
 
-    'additional_sources' => [
+    'additional_paths' => [
         // 'a/path/to/a/language/directory'
     ],
 

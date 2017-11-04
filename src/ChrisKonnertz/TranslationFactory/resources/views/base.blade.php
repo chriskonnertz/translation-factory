@@ -25,6 +25,11 @@
             color: #f4645f;
             text-decoration: none !important;
         }
+
+        .divider {
+            clear: both;
+        }
+
         #sidebar {
             position: fixed;
             width: 10rem;
