@@ -11,7 +11,7 @@ class TranslationFactoryServiceProvider extends ServiceProvider
 {
 
     /**
-     * Bootstrap the application events.
+     * Bootstrap events.
      *
      * @return void
      */

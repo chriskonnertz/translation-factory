@@ -32,6 +32,10 @@
         .label.badge::after {
             background-color: #f4645f;
         }
+        .form-input:focus {
+            border-color: #f4645f;
+            box-shadow: 0 0 0 0.1rem rgba(244,100,95,.2);
+        }
 
         #sidebar {
             position: fixed;
@@ -120,11 +124,17 @@
             background-color: #FBFBFB;
         }
         .items-box li.current {
-            background-color: rgba(244, 100, 95, 0.06);
+            background-color: #f4645f;
+        }
+        .items-box li.current .text-gray {
+            color: white;
         }
         .items-box a {
             display: block;
             padding: 5px 10px;
+        }
+        .item-box blockquote {
+            margin: 0;
         }
     </style>
 </head>
