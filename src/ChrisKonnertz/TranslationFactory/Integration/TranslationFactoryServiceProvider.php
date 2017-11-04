@@ -3,6 +3,7 @@
 namespace ChrisKonnertz\TranslationFactory\Integration;
 
 use ChrisKonnertz\TranslationFactory\Controllers\TranslationFactoryController;
+use ChrisKonnertz\TranslationFactory\Controllers\TranslationFileController;
 use ChrisKonnertz\TranslationFactory\TranslationFactory;
 use Illuminate\Support\ServiceProvider;
 
@@ -64,8 +65,10 @@ class TranslationFactoryServiceProvider extends ServiceProvider
 
         $controllerName = TranslationFactoryController::class;
         $router->get('translation-factory', $controllerName . '@index');
-
         $router->get('translation-factory/logout', $controllerName . '@logout');
+
+        $controllerName = TranslationFileController::class;
+        $router->get('translation-factory/file/{hash}', $controllerName . '@index');
     }
 
 }
