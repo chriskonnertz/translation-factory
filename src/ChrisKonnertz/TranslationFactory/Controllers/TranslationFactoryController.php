@@ -42,8 +42,11 @@ class TranslationFactoryController extends BaseController
         /** @var TranslationFactory $translationFactory */
         $translationFactory = app()->get('translation-factory');
 
-        // TODO Implement an action when the user is not logged in?
         $loggedIn = $translationFactory->getUserManager()->isLoggedIn();
+
+        if (! $loggedIn) {
+            #return redirect(url('/'));
+        }
 
         $reader = $translationFactory->getTranslationReader();
         $translationBags = $reader->readAll();

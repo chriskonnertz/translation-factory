@@ -4,12 +4,27 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Additional Language Sources
+    |--------------------------------------------------------------------------
+    |
+    | Here you may add paths of directories with language files that cannot
+    | be auto-detected to this array. They will then be loaded as well.
+    |
+    */
+
+    'additional_sources' => [
+        // 'a/path/to/a/language/directory'
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Enable User Authentication
     |--------------------------------------------------------------------------
     |
     | Set this to true to enable user authentication, false otherwise
     |
     */
+
     'user_authentication' => true,
 
     /*
@@ -23,6 +38,7 @@ return [
     | manager class and replace the default class with your class
     |
     */
+
     'user_manager' => \ChrisKonnertz\TranslationFactory\User\UserManager::class,
 
     /*
@@ -36,6 +52,7 @@ return [
     | your own user reader class and replace the current value
     |
     */
+
     'translation_reader' => \ChrisKonnertz\TranslationFactory\IO\TranslationReader::class,
 
     /*
@@ -49,6 +66,7 @@ return [
     | your own user writer class and replace the current value
     |
     */
+
     'translation_writer' => \ChrisKonnertz\TranslationFactory\IO\TranslationWriter::class,
 
 ];

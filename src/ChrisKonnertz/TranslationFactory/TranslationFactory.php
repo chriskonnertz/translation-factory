@@ -76,7 +76,11 @@ class TranslationFactory
     {
         $className = $this->config->get(self::CONFIG_NAME.'.translation_reader');
 
+        /** @var TranslationReaderInterface $object */
         $object = app()->make($className);
+
+        $baseLanguage = $this->config->get('app.locale');
+        $object->setBaseLanguage($baseLanguage);
 
         return $object;
     }

@@ -22,15 +22,22 @@ class TranslationReader implements TranslationReaderInterface
     protected $filesystem;
 
     /**
+     * @var string
+     */
+    protected $baseLanguage;
+
+    /**
      * TranslationReader constructor.
      *
-     * @param Translator $translator
-     * @param Filesystem $filesystem
+     * @param Translator $translator   An instance of Laravel's translator service
+     * @param Filesystem $filesystem   An instance of Laravel's filesystem service
+     * @param string     $baseLanguage The language code of the base language, for example 'en'
      */
-    public function __construct(Translator $translator, Filesystem $filesystem)
+    public function __construct(Translator $translator, Filesystem $filesystem, string $baseLanguage = 'en')
     {
         $this->translator = $translator;
         $this->filesystem = $filesystem;
+        $this->baseLanguage = $baseLanguage;
     }
 
     /**
@@ -40,10 +47,9 @@ class TranslationReader implements TranslationReaderInterface
      */
     public function readAll() : array
     {
-        $path = app()->langPath();
+        $mainDir = app()->langPath();
 
-        $baseLanguage = 'en'; // TODO change
-        $translationBags = $this->loadPath($path, $baseLanguage);
+        $translationBags = $this->loadPath($mainDir, $this->baseLanguage);
 
         return $translationBags;
     }
@@ -51,12 +57,12 @@ class TranslationReader implements TranslationReaderInterface
     /**
      * Loads and returns translations from all files in a given directory and its subdirectories.
      *
-     * @param string $basePath
-     * @param        $baseLanguage
-     * @return array|TranslationBag[]
+     * @param string $basePath     The path to the language directory, for example /example/laravel/resource/lang
+     * @param string $baseLanguage The language code of the base language, for example 'en'
+     * @return TranslationBag[]
      * @throws \Exception
      */
-    protected function loadPath(string $basePath, string $baseLanguage) : array
+    protected function loadPath(string $basePath, string $baseLanguage = 'en') : array
     {
         // TODO this is just a first implementation, later on it might make sense to change it
         $basePath .= DIRECTORY_SEPARATOR.$baseLanguage;
@@ -77,6 +83,26 @@ class TranslationReader implements TranslationReaderInterface
         }
 
         return $translationBags;
+    }
+
+    /**
+     * Getter for the base language property
+     *
+     * @return string
+     */
+    public function getBaseLanguage() : string
+    {
+        return $this->baseLanguage;
+    }
+
+    /**
+     * Setter for the base language property
+     *
+     * @param string $baseLanguage
+     */
+    public function setBaseLanguage(string $baseLanguage)
+    {
+        $this->baseLanguage = $baseLanguage;
     }
 
 }

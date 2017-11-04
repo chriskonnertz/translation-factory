@@ -83,6 +83,9 @@
             margin: 1rem 0;
             padding: 1rem;
         }
+        .bag-tile:hover {
+            border-color: #DDD;
+        }
         .bag-tile .icon-wrapper {
             width: 2rem;
             height: 2rem;

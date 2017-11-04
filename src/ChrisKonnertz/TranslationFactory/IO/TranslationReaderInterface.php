@@ -14,4 +14,19 @@ interface TranslationReaderInterface
      */
     public function readAll() : array;
 
+
+    /**
+     * Getter for the base language property
+     *
+     * @return string
+     */
+    public function getBaseLanguage() : string;
+
+    /**
+     * Setter for the base language property
+     *
+     * @param string $baseLanguage
+     */
+    public function setBaseLanguage(string $baseLanguage);
+
 }
