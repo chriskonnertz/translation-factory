@@ -103,8 +103,11 @@
             text-align: center;
         }
 
+        .initial-info-text {
+            margin-bottom: 2rem;
+        }
         .items-box ul {
-            margin: 20px 0;
+            margin: 20px 0 40px 0;
             max-height: 340px; /* 34px * 10 = 340px */
             overflow-y: auto;
             border: 1px solid #EEE;
@@ -115,6 +118,9 @@
         }
         .items-box li:hover {
             background-color: #FBFBFB;
+        }
+        .items-box li.current {
+            background-color: rgba(244, 100, 95, 0.06);
         }
         .items-box a {
             display: block;
