@@ -27,6 +27,13 @@ class TranslationBag
     protected $sourceFile;
 
     /**
+     * Unique hash that can be used to identify this translation bag
+     *
+     * @var string
+     */
+    protected $hash;
+
+    /**
      * TranslationBag constructor.
      *
      * @param string[] $translations
@@ -38,6 +45,8 @@ class TranslationBag
         $this->setSourceDir($sourceDir);
         $this->setSourceFile($sourceFile);
         $this->setTranslations($translations);
+
+        $this->refreshHash();
     }
 
     /**
@@ -59,8 +68,15 @@ class TranslationBag
         $this->translations = $translations;
     }
 
-
-    protected function validateTranslationItem($key, $value, $namespace = '')
+    /**
+     * Validates a translation item (including its sub items).
+     * Throws an exception if the item is invalid.
+     *
+     * @param mixed $key
+     * @param mixed $value
+     * @param string $namespace
+     */
+    protected function validateTranslationItem($key, $value, string $namespace = '')
     {
         if (! is_string($value)) {
             if (is_array($value)) {
@@ -77,6 +93,8 @@ class TranslationBag
     }
 
     /**
+     * Getter for the source dir property
+     *
      * @return string
      */
     public function getSourceDir() : string
@@ -85,6 +103,9 @@ class TranslationBag
     }
 
     /**
+     * Setter for the source dir property.
+     * The source dir has to exist!
+     *
      * @param string $sourceDir
      */
     public function setSourceDir(string $sourceDir)
@@ -97,6 +118,8 @@ class TranslationBag
     }
 
     /**
+     * Getter of the source file property
+     *
      * @return string
      */
     public function getSourceFile() : string
@@ -105,6 +128,9 @@ class TranslationBag
     }
 
     /**
+     * Setter of the source file property.
+     * The file name has to exist!
+     *
      * @param string $sourceFile
      */
     public function setSourceFile(string $sourceFile)
@@ -114,6 +140,8 @@ class TranslationBag
         }
 
         $this->sourceFile = $sourceFile;
+
+        $this->refreshHash();
     }
 
     /**
@@ -125,6 +153,26 @@ class TranslationBag
     {
         $pos = strlen($this->sourceDir);
         return substr($this->sourceFile, $pos);
+    }
+
+    /**
+     * Getter of the hash. The hash can be used to identify this translation abg amongst other bags.
+     *
+     * @return string
+     */
+    public function getHash() : string
+    {
+        return $this->hash;
+    }
+
+    /**
+     * Refreshes the hash based on the source file name.
+     *
+     * @void
+     */
+    protected function refreshHash()
+    {
+        $this->hash = md5($this->sourceFile);
     }
 
 }

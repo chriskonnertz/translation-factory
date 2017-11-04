@@ -12,7 +12,7 @@
             <div class="divider text-center" data-content="{{ $currentDir }}"></div>
         @endif
         <div class="bag-tile-wrapper">
-            <a href="#" class="bag-tile rounded" title="{{ $translationBag->getSourceFile() }}">
+            <a href="{{ url('translation-factory/file/'.$translationBag->getHash()) }}" class="bag-tile rounded" title="{{ $translationBag->getSourceFile() }}">
                 <div class="icon-wrapper">
                     <i class="icon icon-message"></i>
                 </div>
