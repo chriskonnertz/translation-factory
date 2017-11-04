@@ -29,6 +29,9 @@
         .divider {
             clear: both;
         }
+        .label.badge::after {
+            background-color: #f4645f;
+        }
 
         #sidebar {
             position: fixed;
@@ -99,6 +102,24 @@
             color: white;
             text-align: center;
         }
+
+        .items-box ul {
+            margin: 20px 0;
+            max-height: 340px; /* 34px * 10 = 340px */
+            overflow-y: auto;
+            border: 1px solid #EEE;
+        }
+        .items-box li {
+            display: block;
+            margin: 0;
+        }
+        .items-box li:hover {
+            background-color: #FBFBFB;
+        }
+        .items-box a {
+            display: block;
+            padding: 5px 10px;
+        }
     </style>
 </head>
 <body>
@@ -110,7 +131,7 @@
         <nav id="nav">
             <ul>
                 <li>
-                    <a href="{{ url('/translation-factory') }}">Home</a>
+                    <a href="{{ url('/translation-factory') }}">Start</a>
                 </li>
                 <li>
                     <a href="{{ url('/') }}">Website</a>

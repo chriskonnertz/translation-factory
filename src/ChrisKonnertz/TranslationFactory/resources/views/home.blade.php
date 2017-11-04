@@ -1,4 +1,4 @@
-@extends('translationFactory::chooser')
+@extends('translationFactory::file_chooser')
 
 @section('title', 'Home')
 

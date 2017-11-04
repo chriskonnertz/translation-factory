@@ -145,7 +145,7 @@ class TranslationBag
     }
 
     /**
-     * Returns the (unique) name of the translation bag
+     * Returns the name of the translation bag. For example: "validation.php"
      *
      * @return string
      */
@@ -153,6 +153,24 @@ class TranslationBag
     {
         $pos = strlen($this->sourceDir);
         return substr($this->sourceFile, $pos);
+    }
+
+    /**
+     * Returns the title of the translation bag which is nicer to read than the name.
+     * For example: "Validation"
+     *
+     * @return string
+     */
+    public function getTitle() : string
+    {
+        $title = $this->getName();
+
+        $pos = strpos($title, '.');
+        if ($pos !== false and $pos > 0) {
+            $title = substr($title, 0, $pos);
+        }
+
+        return title_case($title);
     }
 
     /**

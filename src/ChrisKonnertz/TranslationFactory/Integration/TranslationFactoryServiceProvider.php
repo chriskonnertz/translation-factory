@@ -69,6 +69,7 @@ class TranslationFactoryServiceProvider extends ServiceProvider
 
         $controllerName = TranslationFileController::class;
         $router->get('translation-factory/file/{hash}', $controllerName . '@index');
+        $router->get('translation-factory/file/{hash}/item/{currentItemKey}', $controllerName . '@edit');
     }
 
 }
