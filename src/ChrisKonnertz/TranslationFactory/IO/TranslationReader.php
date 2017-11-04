@@ -58,9 +58,10 @@ class TranslationReader implements TranslationReaderInterface
      */
     public function readAll() : array
     {
-        $dirs = $this->config->get(TranslationFactory::CONFIG_NAME.'.additional_paths');
         $mainDir = app()->langPath();
-        $dirs[] = $mainDir;
+        $additionalDirs = $this->config->get(TranslationFactory::CONFIG_NAME.'.additional_paths');
+
+        $dirs = array_merge([$mainDir], $additionalDirs);
 
         $translationBags = [];
         foreach ($dirs as $dir) {
