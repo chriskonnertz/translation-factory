@@ -32,7 +32,7 @@ After setup is complete, navigate to `http://<your-domain>/translation-factory` 
 ## Prepare Laravel
 
 This package supports user authentication. Per default it depends on Laravel's built-in user authentication system.
-if you already use Laravel's user authentication then you can skip this section. 
+If you already use Laravel's user authentication then you can skip this section. 
 But if you have a fresh installation of Laravel follow these steps to prepare it:
 
 1. Via a console run `php artisan make:auth` to create resources like a controller and views
@@ -43,3 +43,12 @@ Now the translators will be able to navigate to `http://<your-domain>/home` and 
 > If you do not want to use Laravel's built-in user authentication system you have to create your own user manager 
 that implements the `UserManagerInterface`. Introduce it to Translation Factory by adding its name to the config file
 (key: `user_manager`). Publish the config with `php artisan vendor:publish`.
+
+## Use with External Translators
+
+If you want to use Translatio Factory to let externs translate your texts, this is the recommended way:
+
+1. Setup a new server with your application. The server hould be reachable from the outside.
+2. Make sure Translatio Factory can write into the output directories.
+3. Let the externs create there user accounts
+4. Happy translating!
