@@ -36,6 +36,9 @@
             border-color: #f4645f;
             box-shadow: 0 0 0 0.1rem rgba(244,100,95,.2);
         }
+        .text-primary {
+            color: #f4645f;
+        }
 
         #sidebar {
             position: fixed;
@@ -135,6 +138,9 @@
         }
         .item-box blockquote {
             margin: 0;
+        }
+        .item-box blockquote span {
+            font-weight: bold;
         }
     </style>
 </head>

@@ -30,13 +30,14 @@
                     <div class="form-group">
                         <label class="form-label">Original</label>
                         <blockquote class="bg-gray">
-                            <p>{{ array_get($translationBag->getTranslations(), $currentItemKey) }}</p>
+                            @php $originalText = array_get($translationBag->getTranslations(), $currentItemKey) @endphp
+                            <p>{!! preg_replace('/(:\w+)/', '<span title="This is a parameter">${1}</span>', htmlspecialchars($originalText)) !!}</p>
                         </blockquote>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="input-example-3">Translation</label>
-                        <textarea class="form-input" id="input-example-3" placeholder="Please enter your translation here" rows="5"></textarea>
+                        <label class="form-label" for="translation">Translation</label>
+                        <textarea class="form-input" id="translation" name="translation" placeholder="Please enter your translation here" rows="5"></textarea>
                     </div>
                 </form>
             @else
