@@ -32,7 +32,7 @@
                     <label class="form-label">Original</label>
                     <blockquote class="bg-gray">
                         @php $originalText = array_get($translationBag->getTranslations(), $currentItemKey) @endphp
-                        <p>{!! preg_replace('/(:\w+)/', '<span title="This is a parameter">${1}</span>', htmlspecialchars($originalText)) !!}</p>
+                        <p>{!! preg_replace('/(:\w+|\||\{\d*\}|\[\d*,(\d*|\*)])/', '<span title="This is a special expression">${1}</span>', htmlspecialchars($originalText)) !!}</p>
                     </blockquote>
                 </div>
 
@@ -52,50 +52,52 @@
         @endif
     </div>
 
-    @if ($currentItemKey)
-        <script>
-            (function () {
-                var ul = document.querySelector('.items-box ul');
+
+    <script>
+        (function () {
+            var ul = document.querySelector('.items-box ul');
+
+            @if ($currentItemKey)
                 var li = ul.querySelector('li[data-key="{{ $currentItemKey }}"]');
 
                 ul.scrollTop = li.offsetTop - ul.offsetTop;
                 li.classList.add('current');
+            @endif
 
+            var resize = function () {
+                var content = document.getElementById('content');
+                var header = document.querySelector('#content .header');
+                var itemBox = document.querySelector('#content .item-box');
+                var footer = document.getElementById('footer');
 
-                var resize = function () {
-                    var content = document.getElementById('content');
-                    var header = document.querySelector('#content .header');
-                    var itemBox = document.querySelector('#content .item-box');
-                    var footer = document.getElementById('footer');
+                var li = ul.querySelector('li');
+                var maxHeight = window.innerHeight
+                    - 20 // content padding top
+                    - header.offsetHeight
+                    - 40 // header paragraph margin bottom
+                    - 20 // items-box ul margin top
+                    - 40 // items-box ul margin bottom
+                    - itemBox.offsetHeight
+                    - 20 // content padding top that is not overlaid by footer
+                    - footer.offsetHeight
+                    - 1; // extra offset
 
-                    var li = ul.querySelector('li');
-                    var maxHeight = window.innerHeight
-                        - 20 // content padding top
-                        - header.offsetHeight
-                        - 40 // header paragraph margin bottom
-                        - 20 // items-box ul margin top
-                        - 40 // items-box ul margin bottom
-                        - itemBox.offsetHeight
-                        - 20 // content padding top that is not overlaid by footer
-                        - footer.offsetHeight;
+                var amount = parseInt(maxHeight / li.offsetHeight);
+                var height = Math.max(li.offsetHeight, (amount * li.offsetHeight));
 
-                    var amount = parseInt(maxHeight / li.offsetHeight);
-                    var height = Math.max(li.offsetHeight, (amount * li.offsetHeight));
+                if (height < 3 * li.offsetHeight) {
+                    height = 3 * li.offsetHeight
+                }
 
-                    if (height < 3 * li.offsetHeight) {
-                        height = 3 * li.offsetHeight
-                    }
+                ul.style.maxHeight = height + 'px';
+            };
 
-                    ul.style.maxHeight = height + 'px';
-                };
-
-                window.addEventListener('resize', function(event) {
-                    resize();
-                });
-                document.addEventListener('DOMContentLoaded', function(event) {
-                    resize();
-                });
-            })();
-        </script>
-    @endif
+            window.addEventListener('resize', function(event) {
+                resize();
+            });
+            document.addEventListener('DOMContentLoaded', function(event) {
+                resize();
+            });
+        })();
+    </script>
 @endsection
