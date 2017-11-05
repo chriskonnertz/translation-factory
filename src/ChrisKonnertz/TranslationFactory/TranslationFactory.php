@@ -2,6 +2,8 @@
 
 namespace ChrisKonnertz\TranslationFactory;
 
+use ChrisKonnertz\TranslationFactory\IO\LanguageDetector;
+use ChrisKonnertz\TranslationFactory\IO\LanguageDetectorInterface;
 use ChrisKonnertz\TranslationFactory\IO\TranslationReaderInterface;
 use ChrisKonnertz\TranslationFactory\IO\TranslationWriterInterface;
 use ChrisKonnertz\TranslationFactory\User\UserManagerInterface;
@@ -41,6 +43,13 @@ class TranslationFactory
     protected $translationWriter;
 
     /**
+     * Array with the ISO codes of all languages that translators can translate into
+     *
+     * @var string[]
+     */
+    protected $targetLanguages;
+
+    /**
      * TranslationFactory constructor.
      *
      * @param Repository $config
@@ -51,6 +60,38 @@ class TranslationFactory
         $this->userManager = $this->createUserManager();
         $this->translationReader = $this->createTranslationReader();
         $this->translationWriter = $this->createTranslationWriter();
+
+        $this->detectLanguages();
+    }
+
+    /**
+     * Detects the languages that are available for translation
+     * and stores them in the targetLanguages property
+     *
+     * @return void
+     */
+    public function detectLanguages()
+    {
+        $additionalLanguages = $this->config->get(self::CONFIG_NAME.'.additional_languages');
+
+        $languageDetector = $this->createLanguageDetector();
+        $languages = $languageDetector->detect();
+
+        $this->targetLanguages = $additionalLanguages + $languages;
+    }
+
+    /**
+     * Create a new language detector and return it
+     *
+     * @return LanguageDetectorInterface
+     */
+    protected function createLanguageDetector() : LanguageDetectorInterface
+    {
+        $className = $this->config->get(self::CONFIG_NAME.'.language_detector');
+
+        $object = app()->make($className);
+
+        return $object;
     }
 
     /**
@@ -157,6 +198,16 @@ class TranslationFactory
     public function setTranslationWriter(TranslationWriterInterface $translationWriter)
     {
         $this->translationWriter = $translationWriter;
+    }
+
+    /**
+     * Returns all available target languages
+     *
+     * @return string[]
+     */
+    public function getTargetLanguages() : array
+    {
+        return $this->targetLanguages;
     }
 
 }

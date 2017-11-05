@@ -82,7 +82,6 @@ class TranslationReader implements TranslationReaderInterface
      */
     protected function loadPath(string $basePath, string $baseLanguage = 'en') : array
     {
-        // TODO this is just a first implementation, later on it might make sense to change it
         $basePath .= DIRECTORY_SEPARATOR.$baseLanguage;
 
         /** @var \Symfony\Component\Finder\SplFileInfo[] $files */

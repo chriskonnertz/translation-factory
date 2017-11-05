@@ -11,6 +11,11 @@ class TranslationFileController extends BaseController
 {
 
     /**
+     * @var Repository
+     */
+    protected $config;
+
+    /**
      * TranslationFactoryController constructor.
      *
      * @param Repository $config
@@ -20,6 +25,8 @@ class TranslationFileController extends BaseController
         if ($config->get(TranslationFactory::CONFIG_NAME.'.user_authentication')) {
             //$this->middleware('auth');
         }
+
+        $this->config = $config;
     }
 
     /**
@@ -67,7 +74,9 @@ class TranslationFileController extends BaseController
         $translationReader = $translationFactory->getTranslationReader();
         $translationBag = $this->getBagByHash($translationReader, $hash);
 
-        return view('translationFactory::file', compact('translationBag', 'currentItemKey'));
+        $baseLanguage = $this->config->get('app.locale');
+
+        return view('translationFactory::file', compact('translationBag', 'currentItemKey', 'baseLanguage'));
     }
 
     /**

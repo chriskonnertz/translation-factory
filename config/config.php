@@ -18,6 +18,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Additional Languages
+    |--------------------------------------------------------------------------
+    |
+    | Here you may add the ISO codes of additional target languages that you
+    | want to support if hey cannot be auto-detected when they are new.
+    |
+    */
+
+    'additional_languages' => [
+        'de',
+        'es',
+        'fr',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Enable User Authentication
     |--------------------------------------------------------------------------
     |
@@ -68,5 +84,18 @@ return [
     */
 
     'translation_writer' => \ChrisKonnertz\TranslationFactory\IO\TranslationWriter::class,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Language Detector Class
+    |--------------------------------------------------------------------------
+    |
+    | This is the full qualified name of the class that is used to build
+    | the language detector object. If you want to use something else
+    | you have to write your own class and store its name here
+    |
+    */
+
+    'language_detector' => \ChrisKonnertz\TranslationFactory\IO\LanguageDetector::class,
 
 ];

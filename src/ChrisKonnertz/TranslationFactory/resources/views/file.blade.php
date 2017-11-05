@@ -29,15 +29,17 @@
         @if ($currentItemKey)
             <form>
                 <div class="form-group">
-                    <label class="form-label">Original</label>
+                    <label class="form-label">Original in <a href="https://www.loc.gov/standards/iso639-2/php/langcodes_name.php?iso_639_1={{ $baseLanguage }}" target="_blank"><i>{{ $baseLanguage }}</i></a>:</label>
                     <blockquote class="bg-gray">
                         @php $originalText = array_get($translationBag->getTranslations(), $currentItemKey) @endphp
-                        <p>{!! preg_replace('/(:\w+|\||\{\d*\}|\[\d*,(\d*|\*)])/', '<span title="This is a special expression">${1}</span>', htmlspecialchars($originalText)) !!}</p>
+                        <p>{!! preg_replace('/(:\w+|\||\{\d*\}|\[\d*,(\d*|\*)])/',
+                        '<span title=":\w+ = parameter, | = choice, {\d*} = specific amount, [\d,\d|*] = range">${1}</span>',
+                        htmlspecialchars($originalText)) !!}</p>
                     </blockquote>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="translation">Translation</label>
+                    <label class="form-label" for="translation">Translation:</label>
                     <textarea class="form-input" id="translation" name="translation" placeholder="Please enter your translation here" rows="5"></textarea>
                 </div>
             </form>
@@ -68,7 +70,7 @@
                 var content = document.getElementById('content');
                 var header = document.querySelector('#content .header');
                 var itemBox = document.querySelector('#content .item-box');
-                var footer = document.getElementById('footer');
+                //var footer = document.getElementById('footer');
 
                 var li = ul.querySelector('li');
                 var maxHeight = window.innerHeight
@@ -79,7 +81,7 @@
                     - 40 // items-box ul margin bottom
                     - itemBox.offsetHeight
                     - 20 // content padding top that is not overlaid by footer
-                    - footer.offsetHeight
+                    - 60 // footer.offsetHeight
                     - 1; // extra offset
 
                 var amount = parseInt(maxHeight / li.offsetHeight);
@@ -95,9 +97,8 @@
             window.addEventListener('resize', function(event) {
                 resize();
             });
-            document.addEventListener('DOMContentLoaded', function(event) {
-                resize();
-            });
+            // Immediately resize, do not wait until document is fully loaded
+            resize();
         })();
     </script>
 @endsection

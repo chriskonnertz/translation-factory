@@ -40,6 +40,11 @@
             color: #f4645f;
         }
 
+        noscript {
+            display: block;
+            padding: 1rem 4rem;
+        }
+
         #sidebar {
             position: fixed;
             width: 10rem;
@@ -169,6 +174,10 @@
     </aside>
 
     <div id="main-container">
+        <noscript>
+            <div class="toast toast-warning">JavaScript is not enabled. We highly recommend to enable it!</div>
+        </noscript>
+
         <section id="content">
             @section('content')
                 Hello, world!

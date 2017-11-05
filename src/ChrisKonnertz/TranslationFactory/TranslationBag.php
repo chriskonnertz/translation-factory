@@ -151,7 +151,7 @@ class TranslationBag
      */
     public function getName() : string
     {
-        $pos = strlen($this->sourceDir);
+        $pos = mb_strlen($this->sourceDir);
         return substr($this->sourceFile, $pos);
     }
 
