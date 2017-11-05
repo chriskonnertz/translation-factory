@@ -3,7 +3,37 @@
 @section('title', 'Home')
 
 @section('content')
-    <p>Choose a translation file from the files below.</p>
+    <h1>Welcome</h1>
+
+    <p>Choose the target language and a translation file from the files below.</p>
+
+    <div class="divider text-center" data-content="Choose the target language"></div>
+
+    <form class="form-horizontal">
+        @php $options = '' @endphp
+        @foreach($targetLanguages as $targetLang)
+            @if ($targetLang !== Config::get('app.locale'))
+                @php $options .= '<option value="'.e($targetLang).'">'.e($targetLang).'</option>' @endphp
+            @endif
+        @endforeach
+
+        @if ($options !== '')
+            <div class="form-group">
+                <div class="col-3">
+                    <label class="form-label" for="target_language">Target Language:</label>
+                </div>
+                <div class="col-9">
+                    <select class="form-select" name="target_language">
+                        {!! $options !!}
+                    </select>
+                </div>
+            </div>
+        @else
+            <div class="toast toast-error">
+                There is no target language available. You may add one in the config file.
+            </div>
+        @endif
+    </form>
 
     @php $currentDir = null @endphp
     @foreach($translationBags as $translationBag)

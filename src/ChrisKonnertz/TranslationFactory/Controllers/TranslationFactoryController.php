@@ -51,7 +51,9 @@ class TranslationFactoryController extends BaseController
         $reader = $translationFactory->getTranslationReader();
         $translationBags = $reader->readAll();
 
-        return view('translationFactory::home', compact('translationBags'));
+        $targetLanguages = $translationFactory->getTargetLanguages();
+
+        return view('translationFactory::home', compact('translationBags', 'targetLanguages'));
     }
 
     /**
