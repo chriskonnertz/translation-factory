@@ -7,10 +7,12 @@
         <div class="container">
             <div class="columns">
                 <div class="column col-4">
-                    @if (isset($arrayLevel))
-                        &nbsp;&nbsp; @php echo str_repeat('&middot;', $arrayLevel * 4) @endphp
-                    @endif
-                    <span class="label label-rounded">{{ $itemKey }}</span>
+                    <div class="text-gray text-ellipsis" title="{{ $parentKey.$itemKey }}">
+                        @if (isset($arrayLevel))
+                            &nbsp;&nbsp; @php echo str_repeat('&middot;', $arrayLevel * 4) @endphp
+                        @endif
+                        <span class="label label-rounded">{{ $itemKey }}</span>
+                    </div>
                 </div>
                 <div class="column col-8">
                     @if (is_array($itemValue))
