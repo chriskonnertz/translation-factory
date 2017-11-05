@@ -46,9 +46,9 @@ that implements the `UserManagerInterface`. Introduce it to Translation Factory 
 
 ## Use with External Translators
 
-If you want to use Translatio Factory to let externs translate your texts, this is the recommended way:
+If you want to use Translatio Factory to let externals translators translate your texts, this is the recommended way:
 
-1. Setup a new server with your application. The server hould be reachable from the outside.
-2. Make sure Translatio Factory can write into the output directories.
-3. Let the externs create there user accounts
+1. Setup a new server with your application. The server has to be reachable from the outside.
+2. Make sure Translation Factory can write into the output directories.
+3. Let the externs create their user accounts (`http://<your-domain>/home`)
 4. Happy translating!
