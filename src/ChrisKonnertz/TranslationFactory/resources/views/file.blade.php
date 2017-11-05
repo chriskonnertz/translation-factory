@@ -3,7 +3,7 @@
 @section('title', 'File')
 
 @section('content')
-    <h1 title="{{ $translationBag->getName() }}">{{ $translationBag->getTitle() }}</h1>
+    <h1 title="{{ $translationBag->getSourceFile() }}">{{ $translationBag->getTitle() }}</h1>
 
     <p class="initial-info-text">
         Choose a translation item from the items below.
@@ -30,7 +30,7 @@
                     <div class="form-group">
                         <label class="form-label">Original</label>
                         <blockquote class="bg-gray">
-                            <p>{{ $translationBag->getTranslations()[$currentItemKey] }}</p>
+                            <p>{{ array_get($translationBag->getTranslations(), $currentItemKey) }}</p>
                         </blockquote>
                     </div>
 
@@ -54,7 +54,7 @@
     @if ($currentItemKey)
         <script>
             var ul = document.querySelector('.items-box ul');
-            var li = ul.querySelector('li[data-key={{ $currentItemKey }}]');
+            var li = ul.querySelector('li[data-key="{{ $currentItemKey }}"]');
 
             ul.scrollTop = li.offsetTop - ul.offsetTop;
             li.classList.add('current');

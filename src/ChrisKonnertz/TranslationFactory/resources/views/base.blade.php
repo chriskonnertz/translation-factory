@@ -126,7 +126,7 @@
         .items-box li.current {
             background-color: #f4645f;
         }
-        .items-box li.current .text-gray {
+        .items-box li.current a, .items-box li.current .text-gray {
             color: white;
         }
         .items-box a {

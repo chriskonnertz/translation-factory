@@ -1,5 +1,9 @@
-<li class="key" data-key="{{ $itemKey }}">
-    <a href="@if (! is_array($itemValue)) {{ url('translation-factory/file/'.$translationBag->getHash().'/item/'.$itemKey) }} @endif">
+@if (! isset($parentKey))
+    @php $parentKey = '' @endphp
+@endif
+
+<li class="key" data-key="{{ $parentKey.$itemKey }}">
+    <a href="@if (! is_array($itemValue)){{ url('translation-factory/file/'.$translationBag->getHash().'/item/'.$parentKey.$itemKey) }}@endif">
         <div class="container">
             <div class="columns">
                 <div class="column col-4">
@@ -31,6 +35,7 @@
         @php $arrayLevel = 1 @endphp
     @endif
 
+    @php $parentKey .= $itemKey.'.' @endphp
     @php $subItems = $itemValue @endphp
     @foreach($subItems as $itemKey => $itemValue)
         @include('translationFactory::items_list_item')
