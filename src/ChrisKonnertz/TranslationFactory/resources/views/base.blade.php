@@ -25,6 +25,9 @@
             color: #f4645f;
             text-decoration: none !important;
         }
+        a:focus {
+            box-shadow: 0 0 0 0.1rem rgba(244,100,95,.2);
+        }
 
         .divider {
             clear: both;
