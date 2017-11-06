@@ -29,7 +29,7 @@ This library makes use of Laravel's
  
 Nevertheless you have to publish the assets via: `php artisan vendor:publish --provider="ChrisKonnertz\TranslationFactory\Integration\TranslationFactoryServiceProvider`
  
-After setup is complete, navigate to `http://<your-domain>/translation-factory` to start.
+Then you may navigate to `http://<your-domain>/translation-factory` to start.
 
 ## Prepare Laravel
 
