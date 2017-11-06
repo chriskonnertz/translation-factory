@@ -33,7 +33,7 @@
                     <blockquote class="bg-gray">
                         @php $originalText = array_get($translationBag->getTranslations(), $currentItemKey) @endphp
                         <p>{!! preg_replace('/(:\w+|\||\{\d*\}|\[\d*,(\d*|\*)])/',
-                        '<span title=":\w+ = parameter, | = choice, {\d*} = specific amount, [\d,\d|*] = range">${1}</span>',
+                        '<span title=":\w+ = parameter, | = choice, {\d*} = exact amount, [\d,\d|*] = range">${1}</span>',
                         htmlspecialchars($originalText)) !!}</p>
                     </blockquote>
                 </div>
