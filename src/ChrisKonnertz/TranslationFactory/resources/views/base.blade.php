@@ -32,7 +32,7 @@
         .label.badge::after {
             background-color: #f4645f;
         }
-        .form-input:focus {
+        .form-input:focus, .form-select:focus {
             border-color: #f4645f;
             box-shadow: 0 0 0 0.1rem rgba(244,100,95,.2);
         }
