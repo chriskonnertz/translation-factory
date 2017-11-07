@@ -32,7 +32,7 @@ class TranslationFactoryController extends BaseController
      * Index page of the package
      *
      * @param Repository $config
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      * @throws \Exception
      */
     public function index(Repository $config)
@@ -62,12 +62,24 @@ class TranslationFactoryController extends BaseController
         $targetLanguages = $translationFactory->getTargetLanguages();
 
         return view('translationFactory::home', compact('translationBags', 'baseLanguage', 'targetLanguages'));
+    }    
+    
+    /**
+     * Shows a page with the config values of this package
+     * 
+     * @return \Illuminate\View\View
+     */
+    public function config()
+    {
+        $configValues = $this->config->get(TranslationFactory::CONFIG_NAME);
+
+        return view('translationFactory::config', compact('configValues'));
     }
 
     /**
      * Logs the current user out and redirects to website
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function logout()
     {
