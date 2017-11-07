@@ -169,9 +169,11 @@
                 <li>
                     <a href="https://github.com/chriskonnertz/translation-factory/issues" target="_blank">Support</a>
                 </li>
-                <li>
-                    <a href="{{ url('/translation-factory/logout') }}">Logout</a>
-                </li>
+                @auth
+                    <li>
+                        <a href="{{ url('/translation-factory/logout') }}">Logout</a>
+                    </li>
+                @endauth
             </ul>
         </nav>
     </aside>
