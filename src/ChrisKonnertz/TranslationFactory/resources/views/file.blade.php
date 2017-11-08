@@ -64,6 +64,43 @@
 
                 ul.scrollTop = li.offsetTop - ul.offsetTop;
                 li.classList.add('current');
+                
+                var textArea = document.getElementById('translation');
+
+                var save = function()
+                {
+                    var request = new XMLHttpRequest();
+
+                    //var data = 'translation=' + textArea.value;
+                    var form = document.querySelector('form');
+                    var data = new FormData(form);
+
+                    request.addEventListener('readystatechange', function() {
+                        if (request.readyState === XMLHttpRequest.DONE) {
+                            if (request.status !== 200) {
+                                document.querySelector('form .save-error').classList.remove('d-hide');
+                            }
+                            if (request.status === 200) {
+                                document.querySelector('form .save-error').classList.add('d-hide');
+                            }
+                        }
+                    });
+
+                    request.open(
+                        'POST',
+                        '{{ url('translation-factory/file/'.$translationBag->getHash().'/item/'.$currentItemKey) }}',
+                        true
+                    );
+                    request.send(data);
+
+                };
+
+                document.querySelector('form .save-error a').addEventListener('click', function(event)
+                {
+                    event.preventDefault();
+                    save();
+                });
+                textArea.addEventListener('focusout', save);
             @endif
 
             var resize = function () {
