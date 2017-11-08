@@ -59,12 +59,15 @@
             display: block;
             margin-bottom: 32px;
             padding: 8px 16px;
-            background-color: #f4645f;
             color: white;
             text-transform: uppercase;
             letter-spacing: 3px;
             text-align: center;
             font-weight: bold;
+            background: #f4645f;
+            background: -moz-linear-gradient(45deg, #f4645f 0%, #f28885 100%);
+            background: -webkit-linear-gradient(45deg, #f4645f 0%,#f28885 100%);
+            background: linear-gradient(45deg, #f4645f 0%,#f28885 100%);
         }
         #nav li {
             display: block;
