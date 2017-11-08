@@ -54,7 +54,7 @@ class TranslationFileController extends BaseController
     }
 
     /**
-     * Show the translation file page with a text area for editing a translation item
+     * Shows the translation file page with a text area for editing a translation item
      *
      * @param string $hash
      * @param string $currentItemKey
@@ -77,6 +77,20 @@ class TranslationFileController extends BaseController
         $baseLanguage = $this->config->get('app.locale');
 
         return view('translationFactory::file', compact('translationBag', 'currentItemKey', 'baseLanguage'));
+    }
+    
+    /**
+     * Updatse a translation item
+     *
+     * @param Request $request
+     * @param string  $hash
+     * @param string  $currentItemKey
+     */
+    public function update(Request $request, string $hash, string $currentItemKey)
+    {
+        // TODO Implement this
+        $translation = $request->input('translation');
+        die();
     }
 
     /**
