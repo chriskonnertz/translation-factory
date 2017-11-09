@@ -43,7 +43,7 @@ class TranslationFactoryServiceProvider extends ServiceProvider
     /**
      * Register the views directory
      *
-     * @erturn void
+     * @return void
      */
     protected function registerViews()
     {
@@ -65,6 +65,7 @@ class TranslationFactoryServiceProvider extends ServiceProvider
 
         $controllerName = TranslationFactoryController::class;
         $router->get('translation-factory', $controllerName . '@index');
+        $router->post('translation-factory', $controllerName . '@update');
         $router->get('translation-factory/config', $controllerName . '@config');
         $router->get('translation-factory/logout', $controllerName . '@logout');
 
