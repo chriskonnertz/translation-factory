@@ -39,8 +39,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="translation">Translation:</label>
+                    <label class="form-label" for="translation">Translation to <a href="https://www.loc.gov/standards/iso639-2/php/langcodes_name.php?iso_639_1={{ $targetLanguage }}" target="_blank"><i>{{ $targetLanguage }}</i></a>:</label>
                     <textarea class="form-input" id="translation" name="translation" placeholder="Please enter your translation here" rows="5"></textarea>
+
+                    <div class="toast toast-error save-error d-hide">
+                        Could not save the translation. <a href="#">Retry?</a>
+                    </div>
                 </div>
             </form>
         @else
@@ -64,24 +68,23 @@
 
                 ul.scrollTop = li.offsetTop - ul.offsetTop;
                 li.classList.add('current');
-                
+
                 var textArea = document.getElementById('translation');
 
                 var save = function()
                 {
                     var request = new XMLHttpRequest();
 
-                    //var data = 'translation=' + textArea.value;
                     var form = document.querySelector('form');
                     var data = new FormData(form);
 
                     request.addEventListener('readystatechange', function() {
                         if (request.readyState === XMLHttpRequest.DONE) {
                             if (request.status !== 200) {
-                                document.querySelector('form .save-error').classList.remove('d-hide');
+                                document.querySelector('.save-error').classList.remove('d-hide');
                             }
                             if (request.status === 200) {
-                                document.querySelector('form .save-error').classList.add('d-hide');
+                                document.querySelector('.save-error').classList.add('d-hide');
                             }
                         }
                     });
@@ -95,7 +98,7 @@
 
                 };
 
-                document.querySelector('form .save-error a').addEventListener('click', function(event)
+                document.querySelector('.save-error a').addEventListener('click', function(event)
                 {
                     event.preventDefault();
                     save();
@@ -107,7 +110,6 @@
                 var content = document.getElementById('content');
                 var header = document.querySelector('#content .header');
                 var itemBox = document.querySelector('#content .item-box');
-                //var footer = document.getElementById('footer');
 
                 var li = ul.querySelector('li');
                 var maxHeight = window.innerHeight
