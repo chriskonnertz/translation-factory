@@ -3,25 +3,27 @@
 namespace ChrisKonnertz\TranslationFactory\Controllers;
 
 use ChrisKonnertz\TranslationFactory\TranslationFactory;
-use Illuminate\Config\Repository;
+use Illuminate\Config\Repository as Config;
+use Illuminate\Contracts\Cache\Repository as Cache;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
 class TranslationFactoryController extends BaseController
 {
 
     /**
-     * @var Repository
+     * @var Config
      */
     protected $config;
 
     /**
      * TranslationFactoryController constructor.
      *
-     * @param Repository $config
+     * @param Config $config
      */
-    public function __construct(Repository $config)
+    public function __construct(Config $config)
     {
-        if ($config->get(TranslationFactory::CONFIG_NAME.'.user_authentication')) {
+        if ($config->get(TranslationFactory::CONFIG_NAME.'.user_authentication') === true) {
             //$this->middleware('auth');
         }
 
@@ -31,14 +33,13 @@ class TranslationFactoryController extends BaseController
     /**
      * Index page of the package
      *
-     * @param Repository $config
      * @return \Illuminate\View\View
      * @throws \Exception
      */
-    public function index(Repository $config)
+    public function index()
     {
         // TODO Decide if this is a good idea
-        if ($config->get(TranslationFactory::CONFIG_NAME.'.user_authentication') === null) {
+        if ($this->config->get(TranslationFactory::CONFIG_NAME.'.user_authentication') === null) {
             throw new \Exception(
                 'Please publish the assets of the Translation Factory package via: '.
                 '"php artisan vendor:publish '.
@@ -49,10 +50,12 @@ class TranslationFactoryController extends BaseController
         /** @var TranslationFactory $translationFactory */
         $translationFactory = app()->get('translation-factory');
 
-        $loggedIn = $translationFactory->getUserManager()->isLoggedIn();
+        if ($this->config->get(TranslationFactory::CONFIG_NAME.'.user_authentication') === true) {
+            $loggedIn = $translationFactory->getUserManager()->isLoggedIn();
 
-        if (! $loggedIn) {
-            #return redirect(url('/'));
+            if (!$loggedIn) {
+                return redirect(url('/'));
+            }
         }
 
         $reader = $translationFactory->getTranslationReader();
@@ -62,11 +65,47 @@ class TranslationFactoryController extends BaseController
         $targetLanguages = $translationFactory->getTargetLanguages();
 
         return view('translationFactory::home', compact('translationBags', 'baseLanguage', 'targetLanguages'));
-    }    
-    
+    }
+
+    /**
+     * Updates the client settings
+     *
+     * @param Request $request
+     * @param Cache   $cache
+     * @return \Illuminate\Http\RedirectResponse|null
+     * @throws \Exception
+     */
+    public function update(Request $request, Cache $cache)
+    {
+        $targetLanguage = $request->input('target_language');
+
+        // Ensure the language code only consists of alphabetical characters
+        if (! ctype_alpha($targetLanguage)) {
+            throw new \Exception('Error: The given language code is invalid!');
+        }
+
+        /** @var TranslationFactory $translationFactory */
+        $translationFactory = app()->get('translation-factory');
+
+        $loggedIn = $translationFactory->getUserManager()->isLoggedIn();
+
+        if ($this->config->get(TranslationFactory::CONFIG_NAME.'.user_authentication') === true) {
+            if (! $loggedIn) {
+                return redirect(url('/'));
+            }
+
+            $cache->set(TranslationFactory::CACHE_KEY.'.'.$translationFactory->getUserManager()->getCurrentUserId().
+                '.target_language', $targetLanguage);
+        } else {
+            $cache->set(TranslationFactory::CACHE_KEY.'.target_language', $targetLanguage);
+        }
+
+        return null;
+    }
+
     /**
      * Shows a page with the config values of this package
-     * 
+     *
      * @return \Illuminate\View\View
      */
     public function config()
