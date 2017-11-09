@@ -2,12 +2,12 @@
 
 namespace ChrisKonnertz\TranslationFactory;
 
-use ChrisKonnertz\TranslationFactory\IO\LanguageDetector;
 use ChrisKonnertz\TranslationFactory\IO\LanguageDetectorInterface;
 use ChrisKonnertz\TranslationFactory\IO\TranslationReaderInterface;
 use ChrisKonnertz\TranslationFactory\IO\TranslationWriterInterface;
 use ChrisKonnertz\TranslationFactory\User\UserManagerInterface;
-use Illuminate\Config\Repository;
+use Illuminate\Config\Repository as Config;
+use Illuminate\Contracts\Cache\Repository as Cache;
 
 class TranslationFactory
 {
@@ -15,7 +15,7 @@ class TranslationFactory
     /**
      * The version number
      */
-    const VERSION = '0.0.1-dev';
+    const VERSION = '0.4';
 
     /**
      * Name of the config file (without extension) and name of the config namespace
@@ -23,9 +23,19 @@ class TranslationFactory
     const CONFIG_NAME = 'translation_factory';
 
     /**
-     * @var Repository
+     * Prefix for all cache keys of this package
+     */
+    const CACHE_KEY = 'translation_factory';
+
+    /**
+     * @var Config
      */
     protected $config;
+
+    /**
+     * @var Cache
+     */
+    protected $cache;
 
     /**
      * @var UserManagerInterface
@@ -52,16 +62,48 @@ class TranslationFactory
     /**
      * TranslationFactory constructor.
      *
-     * @param Repository $config
+     * @param Config $config
+     * @param Cache  $cache
      */
-    public function __construct(Repository $config)
+    public function __construct(Config $config, Cache $cache)
     {
         $this->config = $config;
+        $this->cache = $cache;
+
         $this->userManager = $this->createUserManager();
         $this->translationReader = $this->createTranslationReader();
         $this->translationWriter = $this->createTranslationWriter();
 
         $this->detectLanguages();
+    }
+
+    /**
+     * Returns the target language (code) of the client.
+     * Chooses a default language if no target language has been set.
+     *
+     * @return string
+     */
+    public function getTargetLanguage()
+    {
+        if ($this->config->get(TranslationFactory::CONFIG_NAME.'.user_authentication') === true) {
+            if (! $this->userManager->isLoggedIn()) {
+                throw new \LogicException('Cannot get client language if the client is not logged in.');
+            }
+
+            $targetLanguage = $this->cache->get(
+                TranslationFactory::CACHE_KEY.'.'.$this->getUserManager()->getCurrentUserId().'.target_language'
+            );
+        } else {
+            $targetLanguage = $this->cache->get(TranslationFactory::CACHE_KEY.'.target_language');
+        }
+
+        // If no client target language has been set, use the first language
+        // of the detected language as the default language
+        if ($targetLanguage === null) {
+            return $this->targetLanguages[0];
+        }
+
+        return $targetLanguage;
     }
 
     /**
