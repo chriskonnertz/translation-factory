@@ -5,6 +5,7 @@ namespace ChrisKonnertz\TranslationFactory\Controllers;
 use ChrisKonnertz\TranslationFactory\IO\TranslationReaderInterface;
 use ChrisKonnertz\TranslationFactory\TranslationFactory;
 use Illuminate\Config\Repository;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
 class TranslationFileController extends BaseController
@@ -65,22 +66,26 @@ class TranslationFileController extends BaseController
         /** @var TranslationFactory $translationFactory */
         $translationFactory = app()->get('translation-factory');
 
-        $loggedIn = $translationFactory->getUserManager()->isLoggedIn();
+        if ($this->config->get(TranslationFactory::CONFIG_NAME.'.user_authentication') === true) {
+            $loggedIn = $translationFactory->getUserManager()->isLoggedIn();
 
-        if (! $loggedIn) {
-            #return redirect(url('/'));
+            if (!$loggedIn) {
+                return redirect(url('/'));
+            }
         }
 
         $translationReader = $translationFactory->getTranslationReader();
         $translationBag = $this->getBagByHash($translationReader, $hash);
 
         $baseLanguage = $this->config->get('app.locale');
+        $targetLanguage = $translationFactory->getTargetLanguage();
 
-        return view('translationFactory::file', compact('translationBag', 'currentItemKey', 'baseLanguage'));
+        $data = compact('translationBag', 'currentItemKey', 'baseLanguage', 'targetLanguage');
+        return view('translationFactory::file', $data);
     }
-    
+
     /**
-     * Updatse a translation item
+     * Updates a translation item
      *
      * @param Request $request
      * @param string  $hash
