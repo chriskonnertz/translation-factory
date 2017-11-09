@@ -32,7 +32,7 @@ class TranslationFactoryServiceProvider extends ServiceProvider
     {
         $this->app->bind('translation-factory', function($app)
         {
-            return new TranslationFactory($app['config']);
+            return new TranslationFactory($app['config'], $app['Illuminate\Contracts\Cache\Repository']);
         });
 
         $this->registerViews();
