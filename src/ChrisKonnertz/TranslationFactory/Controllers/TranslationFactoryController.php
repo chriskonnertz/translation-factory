@@ -94,10 +94,10 @@ class TranslationFactoryController extends BaseController
                 return redirect(url('/'));
             }
 
-            $cache->set(TranslationFactory::CACHE_KEY.'.'.$translationFactory->getUserManager()->getCurrentUserId().
+            $cache->forever(TranslationFactory::CACHE_KEY.'.'.$translationFactory->getUserManager()->getCurrentUserId().
                 '.target_language', $targetLanguage);
         } else {
-            $cache->set(TranslationFactory::CACHE_KEY.'.target_language', $targetLanguage);
+            $cache->forever(TranslationFactory::CACHE_KEY.'.target_language', $targetLanguage);
         }
 
         return null;
