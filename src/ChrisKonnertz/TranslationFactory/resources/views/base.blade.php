@@ -42,6 +42,10 @@
         .text-primary {
             color: #f4645f;
         }
+        .save-error a {
+            color: white;
+            text-decoration-line: underline !important;
+        }
 
         noscript {
             display: block;
@@ -68,6 +72,9 @@
             background: -moz-linear-gradient(45deg, #f4645f 0%, #f28885 100%);
             background: -webkit-linear-gradient(45deg, #f4645f 0%,#f28885 100%);
             background: linear-gradient(45deg, #f4645f 0%,#f28885 100%);
+        }
+        #logo:hover {
+            text-shadow: 0px 0px 1px white;
         }
         #nav li {
             display: block;
@@ -171,6 +178,9 @@
                 </li>
                 <li>
                     <a href="https://github.com/chriskonnertz/translation-factory/issues" target="_blank">Support</a>
+                </li>
+                <li>
+                    <a href="{{ url('/translation-factory/config') }}">Config</a>
                 </li>
                 @auth
                     <li>
