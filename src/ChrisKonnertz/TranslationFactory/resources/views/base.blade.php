@@ -53,6 +53,20 @@
         .toast.toast-error {
             background: #f4645f;
         }
+        .btn {
+            border-color: #f4645f;
+            color: #f4645f;
+        }
+        .btn:focus {
+            box-shadow: 0 0 0 0.1rem rgba(244,100,95,.2);
+        }
+        .btn:focus, .btn:hover {
+            border-color: #f4645f;
+            background-color: rgba(244,100,95,.1);
+        }
+        .btn:active {
+            background-color: #f4645f;
+        }
 
         .save-error a {
             color: white;
@@ -166,6 +180,9 @@
         }
         .item-box blockquote span {
             font-weight: bold;
+        }
+        .item-box .button-bar {
+            margin-top: 0.4rem;
         }
     </style>
 </head>

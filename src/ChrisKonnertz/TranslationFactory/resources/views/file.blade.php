@@ -48,6 +48,11 @@
                         Could not save the translation. <a href="#">Retry?</a>
                     </div>
                 </div>
+
+                <div class="button-bar">
+                    <button type="button" class="btn btn-sm btn-clear-form">Clear</button>
+                    <button type="reset" class="btn btn-sm btn-reset-form">Reset</button>
+                </div>
             </form>
         @else
             <div class="empty">
@@ -72,6 +77,7 @@
                 li.classList.add('current');
 
                 var textArea = document.getElementById('translation');
+                textArea.focus();
 
                 var save = function()
                 {
@@ -108,6 +114,18 @@
                     save();
                 });
                 textArea.addEventListener('focusout', save);
+
+                document.querySelector('form .btn-clear-form').addEventListener('click', function(event)
+                {
+                    document.querySelector('form textarea').value = '';
+                    save();
+                });
+
+                document.querySelector('form .btn-reset-form').addEventListener('click', function(event)
+                {
+                    document.querySelector('form').reset();
+                    save();
+                });
             @endif
 
             // When the user clicks on an a-element without the href-attribute set, do nothing
