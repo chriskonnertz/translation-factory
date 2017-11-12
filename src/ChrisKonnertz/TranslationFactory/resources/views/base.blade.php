@@ -168,6 +168,12 @@
         .items-box li.current {
             background-color: #f4645f;
         }
+        .items-box .is-translated {
+            font-weight: bold;
+        }
+        .items-box .is-not-translated {
+            color: #DDD
+        }
         .items-box li.current a, .items-box li.current .text-gray {
             color: white;
         }

@@ -14,7 +14,7 @@
                         <span class="label label-rounded">{{ $itemKey }}</span>
                     </div>
                 </div>
-                <div class="column col-8">
+                <div class="column col-7">
                     @if (is_array($itemValue))
                         <span class="label badge" data-badge="{{ sizeof($itemValue) }}">
                             Array
@@ -23,6 +23,13 @@
                         <div class="text-gray text-ellipsis" title="{{ $itemValue }}">
                             {{ $itemValue }}
                         </div>
+                    @endif
+                </div>
+                <div class="column col-1">
+                    @if ($translationBag->getTranslation($targetLanguage, $parentKey.$itemKey) != '')
+                        <span class="is-translated text-gray" title="true">✓</span>
+                    @else
+                        <span class="is-not-translated text-gray" title="false">🞪</span>
                     @endif
                 </div>
             </div>
