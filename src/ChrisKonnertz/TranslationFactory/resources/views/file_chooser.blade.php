@@ -51,4 +51,41 @@
             </a>
         </div>
     @endforeach
+
+    <script>
+        (function () {
+            var targetLang = document.getElementById('target-language');
+
+            var save = function()
+            {
+                var request = new XMLHttpRequest();
+
+                var form = document.querySelector('form');
+                var data = new FormData(form);
+
+                document.querySelector('.save-error').classList.add('d-hide');
+
+                request.addEventListener('readystatechange', function() {
+                    if (request.readyState === XMLHttpRequest.DONE) {
+                        if (request.status !== 200) {
+                            document.querySelector('.save-error').classList.remove('d-hide');
+                        }
+                        if (request.status === 200) {
+                            document.querySelector('.save-error').classList.add('d-hide');
+                        }
+                    }
+                });
+
+                request.open('POST', '{{ url('translation-factory') }}', true);
+                request.send(data);
+            };
+
+            document.querySelector('.save-error a').addEventListener('click', function(event)
+            {
+                event.preventDefault();
+                save();
+            });
+            targetLang.addEventListener('focusout', save);
+        })();
+    </script>
 @endsection

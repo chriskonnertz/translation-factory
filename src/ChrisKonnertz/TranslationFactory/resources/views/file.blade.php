@@ -30,6 +30,7 @@
             <form>
                 <div class="form-group">
                     <label class="form-label">Original in <a href="https://www.loc.gov/standards/iso639-2/php/langcodes_name.php?iso_639_1={{ $baseLanguage }}" target="_blank"><i>{{ $baseLanguage }}</i></a>:</label>
+
                     <blockquote class="bg-gray">
                         @php $originalText = array_get($translationBag->getTranslations()[$translationBag->getBaseLanguage()], $currentItemKey) @endphp
                         <p>{!! preg_replace('/(:\w+|\||\{\d*\}|\[\d*,(\d*|\*)])/',
@@ -52,6 +53,7 @@
                 <div class="button-bar">
                     <button type="button" class="btn btn-sm btn-clear-form">Clear</button>
                     <button type="reset" class="btn btn-sm btn-reset-form">Reset</button>
+                    <button type="button" class="btn btn-sm btn-copy-original">Original</button>
                 </div>
             </form>
         @else
@@ -117,13 +119,26 @@
 
                 document.querySelector('form .btn-clear-form').addEventListener('click', function(event)
                 {
-                    document.querySelector('form textarea').value = '';
+                    textArea.value = '';
                     save();
                 });
 
                 document.querySelector('form .btn-reset-form').addEventListener('click', function(event)
                 {
                     document.querySelector('form').reset();
+                    save();
+                });
+
+                document.querySelector('form .btn-copy-original').addEventListener('click', function(event)
+                {
+                    // Source: https://gist.github.com/CatTail/4174511
+                    var decodeHtmlEntity = function(str) {
+                        return str.replace(/&#(\d+);/g, function(match, dec) {
+                            return String.fromCharCode(dec);
+                        });
+                    };
+
+                    textArea.value = decodeHtmlEntity('{{ $originalText }}');
                     save();
                 });
             @endif
