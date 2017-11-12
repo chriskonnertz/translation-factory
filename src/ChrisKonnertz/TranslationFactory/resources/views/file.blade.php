@@ -80,6 +80,8 @@
                     var form = document.querySelector('form');
                     var data = new FormData(form);
 
+                    document.querySelector('.save-error').classList.add('d-hide');
+
                     request.addEventListener('readystatechange', function() {
                         if (request.readyState === XMLHttpRequest.DONE) {
                             if (request.status !== 200) {
@@ -103,6 +105,7 @@
                 document.querySelector('.save-error a').addEventListener('click', function(event)
                 {
                     event.preventDefault();
+                    save();
                 });
                 textArea.addEventListener('focusout', save);
             @endif

@@ -21,6 +21,11 @@
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
 
     <style>
+        noscript {
+            display: block;
+            padding: 1rem 4rem;
+        }
+
         a, a:focus, a:hover, a:active {
             color: #f4645f;
             text-decoration: none !important;
@@ -45,14 +50,13 @@
         .text-primary {
             color: #f4645f;
         }
+        .toast.toast-error {
+            background: #f4645f;
+        }
+
         .save-error a {
             color: white;
             text-decoration-line: underline !important;
-        }
-
-        noscript {
-            display: block;
-            padding: 1rem 4rem;
         }
 
         #sidebar {

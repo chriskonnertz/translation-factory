@@ -95,6 +95,12 @@ class TranslationFileController extends BaseController
     {
         $translation = $request->input('translation');
 
+        // The translation value can be sent but be null, which is not a valid value,
+        // so change it to an empty string instead
+        if ($translation === null) {
+            $translation = '';
+        }
+
         /** @var TranslationFactory $translationFactory */
         $translationFactory = app()->get('translation-factory');
 
