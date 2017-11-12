@@ -84,9 +84,9 @@ class TranslationBag
      * Validates a translation item (including its sub items).
      * Throws an exception if the item is invalid.
      *
-     * @param mixed $key   The key in dot notation. Might or might not include the language.
-     * @param mixed $value The value. Might be an array with sub value.
-     * @param string $namespace
+     * @param mixed $key        The key (without dots)
+     * @param mixed $value      The value. Might be an array with sub values.
+     * @param string $namespace A prefix for the key in dot notation
      * @return null
      * @throws \InvalidArgumentException
      */
@@ -130,14 +130,21 @@ class TranslationBag
      */
     public function setTranslation(string $language, string $key, string $value)
     {
-        // TODO Check if we can always use array_set
-
         $key = $language.'.'.$key;
-        if (array_has($this->translations, $key)) {
-            array_set($this->translations, $key, $value);
-        } else {
-            array_add($this->translations, $key, $value);
-        }
+
+        array_set($this->translations, $key, $value);
+    }
+
+    /**
+     * Returns a shortened key without the language part. For example: Transforms 'en.accepted' to 'accepted'
+     *
+     * @param string $language
+     * @param string $key
+     * @return string
+     */
+    public function getShortKey(string $language, string $key)
+    {
+        return mb_substr($key, mb_strlen($language));
     }
 
     /**
@@ -169,6 +176,7 @@ class TranslationBag
     /**
      * Getter of the source file property.
      * Returns the file name (with path) of the language file with the base language.
+     * getBaseLanguage() returns the language code of this file.
      *
      * @return string
      */
@@ -193,6 +201,17 @@ class TranslationBag
         $this->sourceFile = $sourceFile;
 
         $this->refreshHash();
+    }
+
+    /**
+     * Returns the language code of the base language of this translation bag.
+     * getSourceFile() returns the file of the base language.
+     *
+     * @return string
+     */
+    public function getBaseLanguage()
+    {
+        return basename(dirname($this->sourceFile));
     }
 
     /**
