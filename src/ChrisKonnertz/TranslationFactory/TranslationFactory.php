@@ -15,7 +15,7 @@ class TranslationFactory
     /**
      * The version number
      */
-    const VERSION = '0.4';
+    const VERSION = '0.6';
 
     /**
      * Name of the config file (without extension) and name of the config namespace

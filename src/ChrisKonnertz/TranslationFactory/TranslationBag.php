@@ -107,7 +107,19 @@ class TranslationBag
     }
 
     /**
-     * Returns a single item of the translation array.
+     * Returns true if a specific item exists in the translations array.
+     *
+     * @param string $language
+     * @param string $key
+     * @return bool
+     */
+    public function hasTranslation(string $language, string $key)
+    {
+        return array_has($this->translations, $language.'.'.$key);
+    }
+
+    /**
+     * Returns a single item of the translations array.
      * Will return an array if the key targets an array.
      * Will return null if the key does not exist.
      *

@@ -40,7 +40,9 @@
 
                 <div class="form-group">
                     <label class="form-label" for="translation">Translation to <a href="https://www.loc.gov/standards/iso639-2/php/langcodes_name.php?iso_639_1={{ $targetLanguage }}" target="_blank"><i>{{ $targetLanguage }}</i></a>:</label>
-                    <textarea class="form-input" id="translation" name="translation" placeholder="Please enter your translation here" rows="5"></textarea>
+
+                    {{-- One giant line to avboid issues with whitespace --}}
+                    <textarea class="form-input" id="translation" name="translation" placeholder="Please enter your translation here" rows="5">@if($translationBag->hasTranslation($targetLanguage, $currentItemKey)){{ $translationBag->getTranslation($targetLanguage, $currentItemKey) }}@endif</textarea>
 
                     <div class="toast toast-error save-error d-hide">
                         Could not save the translation. <a href="#">Retry?</a>
