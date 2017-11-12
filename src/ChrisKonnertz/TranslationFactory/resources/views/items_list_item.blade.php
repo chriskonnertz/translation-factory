@@ -26,10 +26,12 @@
                     @endif
                 </div>
                 <div class="column col-1">
-                    @if ($translationBag->getTranslation($targetLanguage, $parentKey.$itemKey) != '')
-                        <span class="is-translated text-gray" title="true">✓</span>
-                    @else
-                        <span class="is-not-translated text-gray" title="false">🞪</span>
+                    @if (! is_array($itemValue))
+                        @if ($translationBag->getTranslation($targetLanguage, $parentKey.$itemKey) != '')
+                            <span class="is-translated text-gray" title="true">✓</span>
+                        @else
+                            <span class="is-not-translated text-gray" title="false">🞪</span>
+                        @endif
                     @endif
                 </div>
             </div>
