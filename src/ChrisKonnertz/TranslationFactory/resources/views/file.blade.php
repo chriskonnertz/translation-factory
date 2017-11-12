@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="header">
-        <h1 title="{{ $translationBag->getSourceFile() }}">{{ $translationBag->getTitle() }}</h1>
+        <h1 title="{{ $translationBag->getBaseFile() }}">{{ $translationBag->getTitle() }}</h1>
 
         <p class="initial-info-text">
             Choose a translation item from the items below.
@@ -17,7 +17,7 @@
         <div class="divider text-center" data-content="Choose item ({{ sizeof($translationBag->getTranslations(), COUNT_RECURSIVE) }} available)"></div>
 
         <ul>
-            @foreach($translationBag->getTranslations() as $itemKey => $itemValue)
+            @foreach($translationBag->getTranslations()[$translationBag->getBaseLanguage()] as $itemKey => $itemValue)
                 @include('translationFactory::items_list_item')
             @endforeach
         </ul>

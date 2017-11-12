@@ -2,7 +2,9 @@
 
 namespace ChrisKonnertz\TranslationFactory\IO;
 
+use ChrisKonnertz\TranslationFactory\TranslationBag;
+
 interface TranslationWriterInterface
 {
-    public function writeAll();
+    public function write(TranslationBag $translationBag);
 }

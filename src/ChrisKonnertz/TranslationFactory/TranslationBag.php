@@ -221,8 +221,7 @@ class TranslationBag
      */
     public function getName() : string
     {
-        $pos = mb_strlen($this->sourceDir);
-        return substr($this->baseFile, $pos);
+        return basename($this->baseFile);
     }
 
     /**
