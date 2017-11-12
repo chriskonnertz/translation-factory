@@ -4,7 +4,7 @@ namespace ChrisKonnertz\TranslationFactory;
 
 /**
  * An object that is an instance of the class TranslationBag contains all translations that belong to
- * a specific source file. It contains the translations in all available languages.
+ * a specific translation file. It contains the translations in all available languages.
  * A language reader loads these translations and than create the translation bag.
  * To identify translation bags you may use their hash value that is accessible via the getHash() method.
  */
@@ -19,7 +19,7 @@ class TranslationBag
     protected $translations;
 
     /**
-     * Stores the name of the base directory of the source file (without language name)
+     * Stores the name of the base directory of the translation files (without language name)
      *
      * @var string
      */
@@ -30,7 +30,7 @@ class TranslationBag
      *
      * @var string
      */
-    protected $sourceFile;
+    protected $baseFile;
 
     /**
      * Unique hash that can be used to identify this translation bag
@@ -44,12 +44,12 @@ class TranslationBag
      *
      * @param string[] $translations Array with all translations in all available languages. Will be validated
      * @param string   $sourceDir    Path to the source directory (without language name)
-     * @param string   $sourceFile   File name (with path) of the language file with the base language
+     * @param string   $baseFile     File name (with path) of the language file with the base language
      */
-    public function __construct(array $translations, string $sourceDir, string $sourceFile)
+    public function __construct(array $translations, string $sourceDir, string $baseFile)
     {
         $this->setSourceDir($sourceDir);
-        $this->setSourceFile($sourceFile);
+        $this->setBaseFile($baseFile);
         $this->setTranslations($translations);
 
         $this->refreshHash();
@@ -87,7 +87,7 @@ class TranslationBag
      * @param mixed $key        The key (without dots)
      * @param mixed $value      The value. Might be an array with sub values.
      * @param string $namespace A prefix for the key in dot notation
-     * @return null
+     * @return void
      * @throws \InvalidArgumentException
      */
     protected function validateTranslationItem($key, $value, string $namespace = '')
@@ -99,7 +99,7 @@ class TranslationBag
                 }
             } else {
                 throw new \InvalidArgumentException(
-                    'Value of translation item with key "'.$namespace.$key.'" in file "'.$this->sourceFile.
+                    'Value of translation item with key "'.$namespace.$key.'" in file "'.$this->baseFile.
                     '" is not a string and not an array'
                 );
             }
@@ -174,44 +174,44 @@ class TranslationBag
     }
 
     /**
-     * Getter of the source file property.
+     * Getter of the base file property.
      * Returns the file name (with path) of the language file with the base language.
      * getBaseLanguage() returns the language code of this file.
      *
      * @return string
      */
-    public function getSourceFile() : string
+    public function getBaseFile() : string
     {
-        return $this->sourceFile;
+        return $this->baseFile;
     }
 
     /**
-     * Setter of the source file name (with path).
+     * Setter of the base file name (with path).
      * The file name has to exist.
      *
-     * @param string $sourceFile
+     * @param string $baseFile
      * @return void
      */
-    public function setSourceFile(string $sourceFile)
+    public function setBaseFile(string $baseFile)
     {
-        if (! file_exists($sourceFile)) {
-            throw new \InvalidArgumentException('The name of the source file cannot be an empty string');
+        if (! file_exists($baseFile)) {
+            throw new \InvalidArgumentException('The name of the base file cannot be an empty string');
         }
 
-        $this->sourceFile = $sourceFile;
+        $this->baseFile = $baseFile;
 
         $this->refreshHash();
     }
 
     /**
      * Returns the language code of the base language of this translation bag.
-     * getSourceFile() returns the file of the base language.
+     * getBaseFile() returns the file of the base language.
      *
      * @return string
      */
     public function getBaseLanguage()
     {
-        return basename(dirname($this->sourceFile));
+        return basename(dirname($this->baseFile));
     }
 
     /**
@@ -222,7 +222,7 @@ class TranslationBag
     public function getName() : string
     {
         $pos = mb_strlen($this->sourceDir);
-        return substr($this->sourceFile, $pos);
+        return substr($this->baseFile, $pos);
     }
 
     /**
@@ -254,13 +254,13 @@ class TranslationBag
     }
 
     /**
-     * Refreshes the hash based on the source file name.
+     * Refreshes the hash based on the base file name.
      *
      * @return void
      */
     protected function refreshHash()
     {
-        $this->hash = md5($this->sourceFile);
+        $this->hash = md5($this->baseFile);
     }
 
 }

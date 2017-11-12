@@ -60,14 +60,14 @@ class TranslationReader implements TranslationReaderInterface
      */
     public function readAll() : array
     {
-        $mainDir = app()->langPath();
-        $additionalDirs = $this->config->get(TranslationFactory::CONFIG_NAME.'.additional_paths');
+        $mainRootDir = app()->langPath();
+        $additionalRootDirs = $this->config->get(TranslationFactory::CONFIG_NAME.'.additional_paths');
 
-        $dirs = array_merge([$mainDir], $additionalDirs);
+        $rootDirs = array_merge([$mainRootDir], $additionalRootDirs);
 
         $translationBags = [];
-        foreach ($dirs as $dir) {
-            $newTranslationBags = $this->loadPath($dir, $this->baseLanguage);
+        foreach ($rootDirs as $rootDir) {
+            $newTranslationBags = $this->loadPath($rootDir, $this->baseLanguage);
             $translationBags = array_merge($translationBags, $newTranslationBags);
         }
 
@@ -77,45 +77,46 @@ class TranslationReader implements TranslationReaderInterface
     /**
      * Loads and returns translations from all files in a given directory and its subdirectories.
      *
-     * @param string $basePath     The path to the language directory, for example /example/laravel/resource/lang
+     * @param string $rootDir      The path to the translations directory, for example /example/laravel/resource/lang
      * @param string $baseLanguage The language code of the base language, for example 'en'
      * @return TranslationBag[]
      * @throws \Exception
      */
-    protected function loadPath(string $basePath, $baseLanguage = 'en') : array
+    protected function loadPath(string $rootDir, $baseLanguage = 'en') : array
     {
         $translationBags = [];
 
-        $dirs = $this->filesystem->directories($basePath);
+        $langDirs = $this->filesystem->directories($rootDir);
 
-        foreach ($dirs as $dir) {
-            /** @var \Symfony\Component\Finder\SplFileInfo[] $files */
-            $files = $this->filesystem->allFiles($dir);
+        $baseLanguageDir = $rootDir.DIRECTORY_SEPARATOR.$baseLanguage;
 
+        if (! $this->filesystem->exists($baseLanguageDir)) {
+            throw new \Exception(
+                'Error: No language directory for base language "'.$baseLanguage.'" in path "'.$rootDir.'"'
+            );
+        }
+
+        /** @var \Symfony\Component\Finder\SplFileInfo[] $files */
+        $baseFiles = $this->filesystem->allFiles($baseLanguageDir);
+        foreach ($baseFiles as $baseFile) {
             $translations = [];
-            $baseFile = null;
 
-            foreach ($files as $file) {
-                $content = $this->filesystem->getRequire($file->getPathname());
+            foreach ($langDirs as $langDir) {
+                $language = basename($langDir);
+                $filename = $langDir.DIRECTORY_SEPARATOR.$baseFile->getFilename();
 
-                if (! is_array($content)) {
-                    throw new \Exception('Translation file "' . $file->getPathname() . '" does not contain an array');
+                if ($this->filesystem->exists($filename)) {
+                    $content = $this->filesystem->getRequire($filename);
+
+                    if (! is_array($content)) {
+                        throw new \Exception('Translation file "'.$filename.'" does not contain an array');
+                    }
+
+                    $translations[$language] = $content;
                 }
-
-                $language = basename($dir);
-
-                if ($language === $baseLanguage) {
-                    $baseFile = $file->getPathname();
-                }
-
-                $translations[$language] = $content;
             }
 
-            if ($baseFile === null) {
-                throw new \Exception('Error: Given base language does not have any translations in "'.$dir.'"');
-            }
-
-            $translationBags[] = new TranslationBag($translations, $basePath . DIRECTORY_SEPARATOR, $baseFile);
+            $translationBags[] = new TranslationBag($translations, $rootDir.DIRECTORY_SEPARATOR, $baseFile);
         }
 
         return $translationBags;

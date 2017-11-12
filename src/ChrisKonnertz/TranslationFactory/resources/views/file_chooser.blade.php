@@ -42,7 +42,7 @@
             <div class="divider text-center" data-content="{{ $currentDir }}"></div>
         @endif
         <div class="bag-tile-wrapper">
-            <a href="{{ url('translation-factory/file/'.$translationBag->getHash()) }}" class="bag-tile rounded" title="{{ $translationBag->getSourceFile() }}">
+            <a href="{{ url('translation-factory/file/'.$translationBag->getHash()) }}" class="bag-tile rounded" title="{{ $translationBag->getBaseFile() }}">
                 <div class="icon-wrapper">
                     <i class="icon icon-message"></i>
                 </div>
