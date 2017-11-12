@@ -22,7 +22,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | Here you may add the ISO codes of additional target languages that you
-    | want to support if hey cannot be auto-detected when they are new.
+    | want to support, if they cannot be auto-detected (when they are new).
     |
     */
 
@@ -41,7 +41,7 @@ return [
     |
     */
 
-    'user_authentication' => true,
+    'user_authentication' => false,
 
     /*
     |--------------------------------------------------------------------------
