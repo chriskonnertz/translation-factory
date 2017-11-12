@@ -28,6 +28,9 @@
         a:focus {
             box-shadow: 0 0 0 0.1rem rgba(244,100,95,.2);
         }
+        a[href=""] {
+            cursor: default;
+        }
 
         .divider {
             clear: both;

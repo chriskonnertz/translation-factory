@@ -101,10 +101,19 @@
                 document.querySelector('.save-error a').addEventListener('click', function(event)
                 {
                     event.preventDefault();
-                    save();
                 });
                 textArea.addEventListener('focusout', save);
             @endif
+
+            // When the user clicks on an a-element without the href-attribute set, do nothing
+            var noLinks = document.querySelectorAll('a[href=""]');
+            noLinks.forEach(function(element)
+            {
+                element.addEventListener('click', function(event)
+                {
+                    event.preventDefault();
+                });
+            });
 
             var resize = function () {
                 var content = document.getElementById('content');
