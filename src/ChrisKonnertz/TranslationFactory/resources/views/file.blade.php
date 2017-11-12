@@ -31,7 +31,7 @@
                 <div class="form-group">
                     <label class="form-label">Original in <a href="https://www.loc.gov/standards/iso639-2/php/langcodes_name.php?iso_639_1={{ $baseLanguage }}" target="_blank"><i>{{ $baseLanguage }}</i></a>:</label>
                     <blockquote class="bg-gray">
-                        @php $originalText = array_get($translationBag->getTranslations(), $currentItemKey) @endphp
+                        @php $originalText = array_get($translationBag->getTranslations()[$translationBag->getBaseLanguage()], $currentItemKey) @endphp
                         <p>{!! preg_replace('/(:\w+|\||\{\d*\}|\[\d*,(\d*|\*)])/',
                         '<span title=":\w+ = parameter, | = choice, {\d*} = exact amount, [\d,\d|*] = range">${1}</span>',
                         htmlspecialchars($originalText)) !!}</p>
