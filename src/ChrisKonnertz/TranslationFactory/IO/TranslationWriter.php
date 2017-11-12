@@ -44,7 +44,7 @@ class TranslationWriter implements TranslationWriterInterface
             $rootDir = $customOutputDir ?: $translationBag->getSourceDir();
             $fileDir = $rootDir.$language.DIRECTORY_SEPARATOR;
 
-            $content = "<?php".PHP_EOL.PHP_EOL.$this->arrayToCode($translations).';';
+            $content = "<?php".PHP_EOL.PHP_EOL.'return '.$this->arrayToCode($translations).';';
 
             if (! $this->filesystem->exists($fileDir)) {
                 $success = $this->filesystem->makeDirectory($fileDir, 0755, true);
