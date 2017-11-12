@@ -28,9 +28,9 @@
                 <div class="column col-1">
                     @if (! is_array($itemValue))
                         @if ($translationBag->getTranslation($targetLanguage, $parentKey.$itemKey) != '')
-                            <span class="is-translated text-gray" title="true">✓</span>
+                            <span class="is-translated text-gray" title="Translated">✓</span>
                         @else
-                            <span class="is-not-translated text-gray" title="false">🞪</span>
+                            <span class="is-not-translated text-gray" title="Not yet translated">🞪</span>
                         @endif
                     @endif
                 </div>
