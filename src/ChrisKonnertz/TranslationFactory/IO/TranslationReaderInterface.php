@@ -14,7 +14,6 @@ interface TranslationReaderInterface
      */
     public function readAll() : array;
 
-
     /**
      * Getter for the base language property
      *

@@ -29,6 +29,8 @@ class TranslationReader implements TranslationReaderInterface
     protected $config;
 
     /**
+     * The language code of the primary language
+     *
      * @var string
      */
     protected $baseLanguage;
@@ -80,23 +82,40 @@ class TranslationReader implements TranslationReaderInterface
      * @return TranslationBag[]
      * @throws \Exception
      */
-    protected function loadPath(string $basePath, string $baseLanguage = 'en') : array
+    protected function loadPath(string $basePath, $baseLanguage = 'en') : array
     {
-        $basePath .= DIRECTORY_SEPARATOR.$baseLanguage;
-
-        /** @var \Symfony\Component\Finder\SplFileInfo[] $files */
-        $files = $this->filesystem->allFiles($basePath);
-
         $translationBags = [];
 
-        foreach ($files as $file) {
-            $content = $this->filesystem->getRequire($file->getPathname());
+        $dirs = $this->filesystem->directories($basePath);
 
-            if (! is_array($content)) {
-                throw new \Exception('Translation file "'.$file->getPathname().'" does not contain an array');
+        foreach ($dirs as $dir) {
+            /** @var \Symfony\Component\Finder\SplFileInfo[] $files */
+            $files = $this->filesystem->allFiles($dir);
+
+            $translations = [];
+            $baseFile = null;
+
+            foreach ($files as $file) {
+                $content = $this->filesystem->getRequire($file->getPathname());
+
+                if (! is_array($content)) {
+                    throw new \Exception('Translation file "' . $file->getPathname() . '" does not contain an array');
+                }
+
+                $language = basename($dir);
+
+                if ($language === $baseLanguage) {
+                    $baseFile = $file->getPathname();
+                }
+
+                $translations[$language] = $content;
             }
 
-            $translationBags[] = new TranslationBag($content, $basePath.DIRECTORY_SEPARATOR, $file->getPathname());
+            if ($baseFile === null) {
+                throw new \Exception('Error: Given base language does not have any translations in "'.$dir.'"');
+            }
+
+            $translationBags[] = new TranslationBag($translations, $basePath . DIRECTORY_SEPARATOR, $baseFile);
         }
 
         return $translationBags;
@@ -111,7 +130,6 @@ class TranslationReader implements TranslationReaderInterface
     {
         return $this->baseLanguage;
     }
-
     /**
      * Setter for the base language property
      *
