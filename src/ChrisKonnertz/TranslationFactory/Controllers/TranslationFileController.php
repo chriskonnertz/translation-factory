@@ -93,9 +93,18 @@ class TranslationFileController extends BaseController
      */
     public function update(Request $request, string $hash, string $currentItemKey)
     {
-        // TODO Implement this
         $translation = $request->input('translation');
-        die();
+
+        /** @var TranslationFactory $translationFactory */
+        $translationFactory = app()->get('translation-factory');
+
+        $translationReader = $translationFactory->getTranslationReader();
+        $translationBag = $this->getBagByHash($translationReader, $hash);
+
+        $translationBag->setTranslation($translationFactory->getTargetLanguage(), $currentItemKey, $translation);
+
+        $translationWriter = $translationFactory->getTranslationWriter();
+        $translationWriter->write($translationBag);
     }
 
     /**

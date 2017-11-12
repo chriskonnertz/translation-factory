@@ -23,6 +23,7 @@ class TranslationFactoryController extends BaseController
      */
     public function __construct(Config $config)
     {
+        // TODO Remove // or delete the whole statement
         if ($config->get(TranslationFactory::CONFIG_NAME.'.user_authentication') === true) {
             //$this->middleware('auth');
         }
@@ -38,7 +39,6 @@ class TranslationFactoryController extends BaseController
      */
     public function index()
     {
-        // TODO Decide if this is a good idea
         if ($this->config->get(TranslationFactory::CONFIG_NAME.'.user_authentication') === null) {
             throw new \Exception(
                 'Please publish the assets of the Translation Factory package via: '.
