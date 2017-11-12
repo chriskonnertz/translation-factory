@@ -2,25 +2,31 @@
 
 namespace ChrisKonnertz\TranslationFactory;
 
+/**
+ * An object that is an instance of the class TranslationBag contains all translations that belong to
+ * a specific source file. It contains the translations in all available languages.
+ * A language reader loads these translations and than create the translation bag.
+ * To identify translation bags you may use their hash value that is accessible via the getHash() method.
+ */
 class TranslationBag
 {
 
     /**
-     * Contains the translations
+     * Contains the validated translations in all available languages
      *
      * @var array
      */
     protected $translations;
 
     /**
-     * Stores the name of the base directory of the source file
+     * Stores the name of the base directory of the source file (without language name)
      *
      * @var string
      */
     protected $sourceDir;
 
     /**
-     * Stores the name of the file that is the source of this translation bag
+     * Stores the file name (with path) of the language file with the base language
      *
      * @var string
      */
@@ -36,9 +42,9 @@ class TranslationBag
     /**
      * TranslationBag constructor.
      *
-     * @param string[] $translations
-     * @param string   $sourceDir
-     * @param string   $sourceFile
+     * @param string[] $translations Array with all translations in all available languages. Will be validated
+     * @param string   $sourceDir    Path to the source directory (without language name)
+     * @param string   $sourceFile   File name (with path) of the language file with the base language
      */
     public function __construct(array $translations, string $sourceDir, string $sourceFile)
     {
@@ -50,6 +56,9 @@ class TranslationBag
     }
 
     /**
+     * Getter for the translations array.
+     * You may use self::getTranslation() to access a specific key.
+     *
      * @return array
      */
     public function getTranslations() : array
@@ -58,6 +67,9 @@ class TranslationBag
     }
 
     /**
+     * Setter for the translations array
+     * You may use self::setTranslation() to set a specific key.
+     *
      * @param string[] $translations
      * @throws \Exception
      */
@@ -72,9 +84,11 @@ class TranslationBag
      * Validates a translation item (including its sub items).
      * Throws an exception if the item is invalid.
      *
-     * @param mixed $key
-     * @param mixed $value
+     * @param mixed $key   The key in dot notation. Might or might not include the language.
+     * @param mixed $value The value. Might be an array with sub value.
      * @param string $namespace
+     * @return null
+     * @throws \InvalidArgumentException
      */
     protected function validateTranslationItem($key, $value, string $namespace = '')
     {
@@ -93,6 +107,40 @@ class TranslationBag
     }
 
     /**
+     * Returns a single item of the translation array.
+     * Will return an array if the key targets an array.
+     * Will return null if the key does not exist.
+     *
+     * @param string $language
+     * @param string $key
+     * @return string|array|null
+     */
+    public function getTranslation(string $language, string $key)
+    {
+        return array_get($this->translations, $language.'.'.$key);
+    }
+
+    /**
+     * Sets or replaces a single item in the translations array
+     *
+     * @param string $language
+     * @param string $key
+     * @param string $value
+     * @return void
+     */
+    public function setTranslation(string $language, string $key, string $value)
+    {
+        // TODO Check if we can always use array_set
+
+        $key = $language.'.'.$key;
+        if (array_has($this->translations, $key)) {
+            array_set($this->translations, $key, $value);
+        } else {
+            array_add($this->translations, $key, $value);
+        }
+    }
+
+    /**
      * Getter for the source dir property
      *
      * @return string
@@ -107,6 +155,7 @@ class TranslationBag
      * The source dir has to exist!
      *
      * @param string $sourceDir
+     * @return void
      */
     public function setSourceDir(string $sourceDir)
     {
@@ -118,7 +167,8 @@ class TranslationBag
     }
 
     /**
-     * Getter of the source file property
+     * Getter of the source file property.
+     * Returns the file name (with path) of the language file with the base language.
      *
      * @return string
      */
@@ -128,14 +178,15 @@ class TranslationBag
     }
 
     /**
-     * Setter of the source file property.
-     * The file name has to exist!
+     * Setter of the source file name (with path).
+     * The file name has to exist.
      *
      * @param string $sourceFile
+     * @return void
      */
     public function setSourceFile(string $sourceFile)
     {
-        if (trim($sourceFile) === '') {
+        if (! file_exists($sourceFile)) {
             throw new \InvalidArgumentException('The name of the source file cannot be an empty string');
         }
 
@@ -186,7 +237,7 @@ class TranslationBag
     /**
      * Refreshes the hash based on the source file name.
      *
-     * @void
+     * @return void
      */
     protected function refreshHash()
     {
