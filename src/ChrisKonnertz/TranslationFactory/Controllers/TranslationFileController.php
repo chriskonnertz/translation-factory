@@ -93,6 +93,8 @@ class TranslationFileController extends BaseController
      */
     public function update(Request $request, string $hash, string $currentItemKey)
     {
+        // TODO Add user checks
+
         $translation = $request->input('translation');
 
         // The translation value can be sent but be null, which is not a valid value,

@@ -25,7 +25,6 @@
             display: block;
             padding: 1rem 4rem;
         }
-
         a, a:focus, a:hover, a:active {
             color: #f4645f;
             text-decoration: none !important;
@@ -44,8 +43,8 @@
             background-color: #f4645f;
         }
         .form-input:focus, .form-select:focus {
-            border-color: #f4645f;
-            box-shadow: 0 0 0 0.1rem rgba(244,100,95,.2);
+            border-color: #c5c5c5;
+            box-shadow: 0 0 0 0.1rem rgb(231, 233, 237);
         }
         .text-primary {
             color: #f4645f;
@@ -66,6 +65,10 @@
         }
         .btn:active {
             background-color: #f4645f;
+        }
+        .progress {
+            background: #f0f1f4 linear-gradient(to right, #E7E9ED 30%, #f0f1f4 30%) top left/150% 150% no-repeat !important;
+            display: block;
         }
 
         .save-error a {

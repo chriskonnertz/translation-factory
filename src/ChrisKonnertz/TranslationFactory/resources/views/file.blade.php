@@ -7,8 +7,7 @@
         <h1 title="{{ $translationBag->getBaseFile() }}">{{ $translationBag->getTitle() }}</h1>
 
         <p class="initial-info-text">
-            Choose a translation item from the items below.
-            Then you will be able to edit it.
+            Choose a translation item from the items below, then you will be able to edit it.
             Translations will be saved automatically.
         </p>
     </div>
@@ -42,8 +41,10 @@
                 <div class="form-group">
                     <label class="form-label" for="translation">Translation to <a href="https://www.loc.gov/standards/iso639-2/php/langcodes_name.php?iso_639_1={{ $targetLanguage }}" target="_blank"><i>{{ $targetLanguage }}</i></a>:</label>
 
-                    {{-- One giant line to avboid issues with whitespace --}}
+                    {{-- One giant line to avoid issues with whitespace --}}
                     <textarea class="form-input" id="translation" name="translation" placeholder="Please enter your translation here" rows="5">@if($translationBag->hasTranslation($targetLanguage, $currentItemKey)){{ $translationBag->getTranslation($targetLanguage, $currentItemKey) }}@endif</textarea>
+
+                    <progress class="progress save-progress d-invisible" max="100" title="Saving..."></progress>
 
                     <div class="toast toast-error save-error d-hide">
                         Could not save the translation. <a href="#">Retry?</a>
@@ -75,6 +76,7 @@
             @if ($currentItemKey)
                 var li = ul.querySelector('li[data-key="{{ $currentItemKey }}"]');
 
+                // Scroll to the item of the select key and mark it as the current item
                 ul.scrollTop = li.offsetTop - ul.offsetTop;
                 li.classList.add('current');
 
@@ -89,9 +91,11 @@
                     var data = new FormData(form);
 
                     document.querySelector('.save-error').classList.add('d-hide');
+                    document.querySelector('.save-progress').classList.remove('d-invisible');
 
                     request.addEventListener('readystatechange', function() {
                         if (request.readyState === XMLHttpRequest.DONE) {
+                            document.querySelector('.save-progress').classList.add('d-invisible');
                             if (request.status !== 200) {
                                 document.querySelector('.save-error').classList.remove('d-hide');
                             }
@@ -110,12 +114,20 @@
 
                 };
 
+                var originalTranslatedText = textArea.value;
+                textArea.addEventListener('focusout', function()
+                {
+                    // Only save if the text has changed
+                    if (textArea.value !== originalTranslatedText) {
+                        save();
+                    }
+                });
+
                 document.querySelector('.save-error a').addEventListener('click', function(event)
                 {
                     event.preventDefault();
                     save();
                 });
-                textArea.addEventListener('focusout', save);
 
                 document.querySelector('form .btn-clear-form').addEventListener('click', function(event)
                 {
@@ -131,6 +143,7 @@
 
                 document.querySelector('form .btn-copy-original').addEventListener('click', function(event)
                 {
+                    // Decodes a string with HTML entities.
                     // Source: https://gist.github.com/CatTail/4174511
                     var decodeHtmlEntity = function(str) {
                         return str.replace(/&#(\d+);/g, function(match, dec) {
@@ -183,8 +196,7 @@
             window.addEventListener('resize', function(event) {
                 resize();
             });
-            // Immediately resize, do not wait until document is fully loaded
-            resize();
+            resize(); // Immediately resize, do not wait until document is fully loaded
         })();
     </script>
 @endsection
