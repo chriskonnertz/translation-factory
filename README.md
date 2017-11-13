@@ -28,8 +28,10 @@ This library makes use of Laravel's
  so it will be auto-detected.
  
 Nevertheless you have to publish the assets via: `php artisan vendor:publish --provider="ChrisKonnertz\TranslationFactory\Integration\TranslationFactoryServiceProvider`
+
+> Please backup all of your original translation files, because they will be overwritten!
  
-Then you may navigate to `http://<your-domain>/translation-factory` to start.
+Then you may navigate to `http://<your-domain>/translation-factory` to start. 
 
 ## Prepare Laravel
 
@@ -52,5 +54,9 @@ If you want to use Translation Factory to let externals translators translate yo
 
 1. Setup a new server with your application. The server has to be reachable from the outside.
 2. Make sure Translation Factory can write into the output directories.
-3. Let the externs create their user accounts (`http://<your-domain>/home`)
+3. Let the externals create their user accounts (`http://<your-domain>/home`)
 4. Happy translating!
+
+## Configuration
+
+Open `config/translation_factory.php` to change the configuration. All settings are documented.  
