@@ -99,6 +99,10 @@ class TranslationReader implements TranslationReaderInterface
         /** @var \Symfony\Component\Finder\SplFileInfo[] $files */
         $baseFiles = $this->filesystem->allFiles($baseLanguageDir);
         foreach ($baseFiles as $baseFile) {
+            if (strtolower($baseFile->getExtension()) !== 'php') {
+                continue;
+            }
+
             $translations = [];
 
             foreach ($langDirs as $langDir) {

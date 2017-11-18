@@ -91,8 +91,19 @@ EOT;
             $code .= PHP_EOL;
         }
 
+        $maxKeyCodeLength = -1;
         foreach ($array as $key => $item) {
-            $code .= str_repeat(' ', $level * self::TAB_SIZE).var_export($key, true).' => ';
+            $keyCode = var_export($key, true);
+            if (mb_strlen($keyCode) > $maxKeyCodeLength) {
+                $maxKeyCodeLength = mb_strlen($keyCode);
+            }
+        }
+
+        foreach ($array as $key => $item) {
+            $keyCode = var_export($key, true);
+            $code .= str_repeat(' ', $level * self::TAB_SIZE).$keyCode;
+            $code .= str_repeat(' ', $maxKeyCodeLength - mb_strlen($keyCode));
+            $code .= ' => ';
 
             if (is_array($item)) {
                 $code .= $this->arrayToCode($item, $level + 1);
