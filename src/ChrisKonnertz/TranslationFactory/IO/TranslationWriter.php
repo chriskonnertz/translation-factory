@@ -6,9 +6,24 @@ namespace ChrisKonnertz\TranslationFactory\IO;
 // it does not contain all the methods that we expect.
 use ChrisKonnertz\TranslationFactory\TranslationBag;
 use Illuminate\Filesystem\Filesystem;
+use function PHPSTORM_META\type;
 
 class TranslationWriter implements TranslationWriterInterface
 {
+
+    /**
+     * Template for the translation file
+     */
+    const FILE_TEMPLATE = <<<EOT
+<?php
+
+return %values%;
+EOT;
+
+    /**
+     * The number of spaces a tab consists of
+     */
+    const TAB_SIZE = 4;
 
     /**
      * @var Filesystem
@@ -44,7 +59,8 @@ class TranslationWriter implements TranslationWriterInterface
             $rootDir = $customOutputDir ?: $translationBag->getSourceDir();
             $fileDir = $rootDir.$language.DIRECTORY_SEPARATOR;
 
-            $content = "<?php".PHP_EOL.PHP_EOL.'return '.$this->arrayToCode($translations).';';
+            $arrayCode = $this->arrayToCode($translations);
+            $content = str_replace('%values%', $arrayCode, self::FILE_TEMPLATE);
 
             if (! $this->filesystem->exists($fileDir)) {
                 $success = $this->filesystem->makeDirectory($fileDir, 0755, true);
@@ -64,12 +80,36 @@ class TranslationWriter implements TranslationWriterInterface
      * This methods expects an array as parameter. It will return a piece of PHP code.
      * This code will consist of the array as PHP code.
      *
-     * @param array $array
+     * @param array $array The array that has to be written as PHP code
+     * @param int   $level The current level in the array, starting at 1
      * @return string
      */
-    protected function arrayToCode(array $array)
+    protected function arrayToCode(array $array, $level = 1)
     {
-        return var_export($array, true);
+        $code = '['.PHP_EOL;
+        if ($level === 1) {
+            $code .= PHP_EOL;
+        }
+
+        foreach ($array as $key => $item) {
+            $code .= str_repeat(' ', $level * self::TAB_SIZE).var_export($key, true).' => ';
+
+            if (is_array($item)) {
+                $code .= $this->arrayToCode($item, $level + 1);
+            } else {
+                $code .= var_export($item, true);
+            }
+
+            $code .= ','.PHP_EOL;
+        }
+
+
+        if ($level === 1) {
+            $code .= PHP_EOL;
+        }
+        $code .= str_repeat(' ', ($level - 1) * self::TAB_SIZE).']';
+
+        return $code;
     }
 
 }
