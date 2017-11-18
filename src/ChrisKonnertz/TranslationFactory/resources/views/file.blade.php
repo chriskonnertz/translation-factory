@@ -81,6 +81,7 @@
                 li.classList.add('current');
 
                 var textArea = document.getElementById('translation');
+                var textAreaDirty = false; // True if the text of the text area needs to be saved
                 textArea.focus();
 
                 var save = function()
@@ -114,11 +115,17 @@
 
                 };
 
+                textArea.addEventListener('change', function()
+                {
+                    textAreaDirty = true;
+                });
+
                 var originalTranslatedText = textArea.value;
                 textArea.addEventListener('focusout', function()
                 {
                     // Only save if the text has changed
-                    if (textArea.value !== originalTranslatedText) {
+                    if (textAreaDirty) {
+                        textAreaDirty = false;
                         save();
                     }
                 });

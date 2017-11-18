@@ -88,9 +88,10 @@ EOT;
     {
         $code = '['.PHP_EOL;
         if ($level === 1) {
-            $code .= PHP_EOL;
+            $code .= PHP_EOL; // Add empty line
         }
 
+        // Find out the length of the longest key (written key)
         $maxKeyCodeLength = -1;
         foreach ($array as $key => $item) {
             $keyCode = var_export($key, true);
@@ -101,8 +102,8 @@ EOT;
 
         foreach ($array as $key => $item) {
             $keyCode = var_export($key, true);
-            $code .= str_repeat(' ', $level * self::TAB_SIZE).$keyCode;
-            $code .= str_repeat(' ', $maxKeyCodeLength - mb_strlen($keyCode));
+            $code .= str_repeat(' ', $level * self::TAB_SIZE).$keyCode; // Add spaces for indentation
+            $code .= str_repeat(' ', $maxKeyCodeLength - mb_strlen($keyCode)); // Add spaces for better formatting
             $code .= ' => ';
 
             if (is_array($item)) {
@@ -116,9 +117,9 @@ EOT;
 
 
         if ($level === 1) {
-            $code .= PHP_EOL;
+            $code .= PHP_EOL; // Add empty line
         }
-        $code .= str_repeat(' ', ($level - 1) * self::TAB_SIZE).']';
+        $code .= str_repeat(' ', ($level - 1) * self::TAB_SIZE).']'; // Add spaces for indentation
 
         return $code;
     }
