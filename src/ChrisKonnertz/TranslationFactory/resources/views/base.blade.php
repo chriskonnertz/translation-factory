@@ -35,6 +35,10 @@
         a[href=""] {
             cursor: default;
         }
+        textarea {
+            resize: vertical;
+            min-height: 2rem;
+        }
 
         .divider {
             clear: both;
@@ -71,6 +75,12 @@
             display: block;
         }
 
+        @media(max-width: 840px) {
+            .table-wrapper {
+                max-width: 100%;
+                overflow-x: scroll;
+            }
+        }
         .save-error a {
             color: white;
             text-decoration-line: underline !important;
@@ -100,6 +110,17 @@
         #logo:hover {
             text-shadow: 0 0 1px white;
         }
+        #sidebar .hamburger {
+            display: none;
+            text-align: right;
+            cursor: pointer;
+        }
+        #sidebar .hamburger:focus {
+            box-shadow: none;
+        }
+        #nav {
+            transition: max-height 0.5s;
+        }
         #nav li {
             display: block;
         }
@@ -126,6 +147,31 @@
             padding: 1rem 4rem;
             line-height: 1rem;
             color: #999;
+        }
+
+        @media(max-width: 840px) {
+            #sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+            #sidebar .hamburger {
+                display: block;
+            }
+            #nav {
+                max-height: 0;
+                overflow: hidden;
+            }
+            #nav.visible {
+                max-height: 50rem; /* = total height of the nav */
+            }
+            #main-container {
+                margin-left: 0;
+            }
+            #content {
+                padding-right: 1rem;
+                padding-left: 1rem;
+            }
         }
 
         .bag-tile-wrapper {
@@ -155,6 +201,16 @@
         }
         .bag-tile .tile-subtitle {
             margin: 0;
+        }
+        @media(max-width: 600px) {
+            .bag-tile-wrapper {
+                width: 100%;
+            }
+        }
+        @media(min-width: 601px) and (max-width: 1280px) {
+            .bag-tile-wrapper {
+                width: 50%;
+            }
         }
 
         .initial-info-text {
@@ -206,13 +262,16 @@
             Translation<br>
             Factory
         </a>
+        <a href="#" class="hamburger">
+            <i class="icon icon-menu"></i>
+        </a>
         <nav id="nav">
             <ul>
                 <li>
                     <a href="{{ url('/translation-factory') }}">Start</a>
                 </li>
                 <li>
-                    <a href="{{ url('/') }}">Website</a>
+                    <a href="{{ url('/') }}">Frontend</a>
                 </li>
                 <li>
                     <a href="https://github.com/chriskonnertz/translation-factory/issues" target="_blank">Support</a>
@@ -247,5 +306,17 @@
             More on <a href="https://github.com/chriskonnertz/translation-factory" target="_blank">GitHub</a>.
         </footer>
     </div>
+
+    <script>
+        (function () {
+            var hamburger = document.querySelector('#sidebar .hamburger');
+            var nav = document.getElementById('nav');
+
+            hamburger.addEventListener('click', function(event)
+            {
+                nav.classList.toggle('visible');
+            });
+        })();
+    </script>
 </body>
 </html>

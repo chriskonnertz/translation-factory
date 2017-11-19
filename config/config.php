@@ -34,6 +34,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Automatically Create Backups
+    |--------------------------------------------------------------------------
+    |
+    | Set this option to true, if you want this package to automatically
+    |create backups of the translations files. This is recommended.
+    |
+    */
+
+    'auto_backups' => true,
+
+    /*
+    |--------------------------------------------------------------------------
     | Enable User Authentication
     |--------------------------------------------------------------------------
     |

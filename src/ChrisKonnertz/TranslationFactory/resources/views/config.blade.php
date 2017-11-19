@@ -7,11 +7,11 @@
         <h1>Config</h1>
 
         <p class="initial-info-text">
-            Below you can see all the config values of this package.
+            Below you can see all the configuration values of this package.
         </p>
     </div>
 
-    <div>
+    <div class="table-wrapper">
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
