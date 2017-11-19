@@ -274,4 +274,27 @@ class TranslationBag
         $this->hash = md5($this->baseFile);
     }
 
+    /**
+     * Returns the total number of translations in this bag.
+     * Also counts translations that are wrapped in arrays.
+     *
+     * @return int
+     */
+    public function count()
+    {
+        $totalSize = sizeof($this->getTranslations(), COUNT_RECURSIVE);
+        $numberOfLanguages = sizeof($this->getTranslations());
+        return $totalSize - $numberOfLanguages;
+    }
+
+    /**
+     * Returns the number of languages in this bag.
+     *
+     * @return int
+     */
+    public function countLanguages()
+    {
+        return sizeof($this->getTranslations());
+    }
+
 }

@@ -42,12 +42,42 @@
             <div class="divider text-center" data-content="{{ $currentDir }}"></div>
         @endif
         <div class="bag-tile-wrapper">
+            <!--
             <a href="{{ url('translation-factory/file/'.$translationBag->getHash()) }}" class="bag-tile rounded" title="{{ $translationBag->getBaseFile() }}">
                 <div class="icon-wrapper">
                     <i class="icon icon-message"></i>
                 </div>
 
                 <span class="name">{{ $translationBag->getName() }}</span>
+            </a>
+            -->
+
+            <a href="{{ url('translation-factory/file/'.$translationBag->getHash()) }}" class="tile bag-tile rounded" title="{{ $translationBag->getBaseFile() }}">
+                <div class="tile-icon">
+                    <div class="icon-wrapper">
+                        <i class="icon icon-message"></i>
+                    </div>
+                </div>
+                <div class="tile-content">
+                    <p class="tile-title">
+                        {{ $translationBag->getName() }}
+                    </p>
+                    <p class="tile-subtitle text-gray">
+                        This file contains
+                        @if ($translationBag->count() === 1)
+                            one item
+                        @else
+                            {{ $translationBag->count() }} items
+                        @endif
+                        in
+                        @if ($translationBag->countLanguages() === 1)
+                            one language.
+                        @else
+                            {{ $translationBag->countLanguages() }} languages.
+                        @endif
+                        The file size of the base file is {{ filesize($translationBag->getBaseFile()) }} Bytes.
+                    </p>
+                </div>
             </a>
         </div>
     @endforeach

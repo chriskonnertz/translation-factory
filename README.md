@@ -59,4 +59,10 @@ If you want to use Translation Factory to let externals translators translate yo
 
 ## Configuration
 
-Open `config/translation_factory.php` to change the configuration. All settings are documented.  
+Open `config/translation_factory.php` to change the configuration. All settings are documented.
+
+## Current State
+
+This is an MVP (minimum viable product). The code quality is okay, but for sure it is not great. 
+There is a lot of space for refactoring. This will happen if it turns out that this package actually meets 
+someones needs. 

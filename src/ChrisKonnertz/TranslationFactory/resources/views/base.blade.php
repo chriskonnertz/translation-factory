@@ -80,7 +80,7 @@
             position: fixed;
             width: 10rem;
             height: 100vh;
-            padding: 16px;
+            padding: 0.75rem;
             background-color: #f8f9fa;
         }
         #logo {
@@ -98,14 +98,14 @@
             background: linear-gradient(45deg, #f4645f 0%,#f28885 100%);
         }
         #logo:hover {
-            text-shadow: 0px 0px 1px white;
+            text-shadow: 0 0 1px white;
         }
         #nav li {
             display: block;
         }
         #nav a {
             display: block;
-            padding: 5px 0;
+            padding: 0.25rem 0;
             color: #999;
             font-weight: bold;
         }
@@ -135,7 +135,6 @@
             padding-right: 1rem;
         }
         .bag-tile {
-            display: block;
             border: 1px solid #EEE;
             margin: 1rem 0;
             padding: 1rem;
@@ -151,12 +150,18 @@
             color: white;
             text-align: center;
         }
+        .bag-tile .tile-title {
+            font-weight: bold;
+        }
+        .bag-tile .tile-subtitle {
+            margin: 0;
+        }
 
         .initial-info-text {
             margin-bottom: 2rem;
         }
         .items-box ul {
-            margin: 20px 0 40px 0;
+            margin: 1rem 0 2rem 0;
             max-height: 340px; /* 34px * 10 = 340px */
             overflow-y: auto;
             border: 1px solid #EEE;
@@ -182,7 +187,7 @@
         }
         .items-box a {
             display: block;
-            padding: 5px 10px;
+            padding: 0.25rem 0.5rem;
         }
         .item-box blockquote {
             margin: 0;

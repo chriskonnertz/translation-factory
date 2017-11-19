@@ -13,7 +13,7 @@
     </div>
 
     <div class="items-box @php echo $currentItemKey ? '' : 'max' @endphp">
-        <div class="divider text-center" data-content="Choose item ({{ sizeof($translationBag->getTranslations(), COUNT_RECURSIVE) }} available)"></div>
+        <div class="divider text-center" data-content="Choose item ({{ $translationBag->count() }} available)"></div>
 
         <ul>
             @foreach($translationBag->getTranslations()[$translationBag->getBaseLanguage()] as $itemKey => $itemValue)
@@ -120,7 +120,6 @@
                     textAreaDirty = true;
                 });
 
-                var originalTranslatedText = textArea.value;
                 textArea.addEventListener('focusout', function()
                 {
                     // Only save if the text has changed

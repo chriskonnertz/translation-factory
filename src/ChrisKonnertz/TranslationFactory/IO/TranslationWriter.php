@@ -14,11 +14,7 @@ class TranslationWriter implements TranslationWriterInterface
     /**
      * Template for the translation file
      */
-    const FILE_TEMPLATE = <<<EOT
-<?php
-
-return %values%;
-EOT;
+    const FILE_TEMPLATE = '<?php'.PHP_EOL.PHP_EOL.'return %values%;';
 
     /**
      * The number of spaces a tab consists of
