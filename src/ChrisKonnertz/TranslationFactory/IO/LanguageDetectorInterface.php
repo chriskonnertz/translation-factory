@@ -5,7 +5,7 @@ namespace ChrisKonnertz\TranslationFactory\IO;
 interface LanguageDetectorInterface
 {
     /**
-     * Finds all language directories and based on them return the names of all available languages
+     * Finds all language directories and based on them returns the names of all available languages
      *
      * @return string[]
      */

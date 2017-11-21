@@ -29,8 +29,6 @@ This library makes use of Laravel's
  
 Nevertheless you have to publish the assets via: `php artisan vendor:publish --provider="ChrisKonnertz\TranslationFactory\Integration\TranslationFactoryServiceProvider`
 
-> Please backup all of your original translation files, because they will be overwritten!
- 
 Then you may navigate to `http://<your-domain>/translation-factory` to start. 
 
 ## Prepare Laravel
@@ -60,6 +58,13 @@ If you want to use Translation Factory to let externals translators translate yo
 ## Configuration
 
 Open `config/translation_factory.php` to change the configuration. All settings are documented.
+
+## Backups
+
+The default behaviour of Translation Factory is to make daily backups of all translation files
+ that it wants to overwrite. They will be stored in `<storage-path>/app/translations` which usually
+ translates to `storage/app/translations`. Their names will be built of a hash and the date 
+ and use ".backup" as extension.
 
 ## Current State
 

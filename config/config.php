@@ -38,11 +38,24 @@ return [
     |--------------------------------------------------------------------------
     |
     | Set this option to true, if you want this package to automatically
-    |create backups of the translations files. This is recommended.
+    | create backups of the translations files. This is recommended.
     |
     */
 
     'auto_backups' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Backup Path
+    |--------------------------------------------------------------------------
+    |
+    | If making backups is enabled, this property defines the absolute
+    | path of the backup directory. If it doe not exists, it will
+    | automatically be created. Ensure write access is given.
+    |
+    */
+
+    'backup_dir' => storage_path('app'.DIRECTORY_SEPARATOR.'translations'),
 
     /*
     |--------------------------------------------------------------------------

@@ -4,7 +4,7 @@ namespace ChrisKonnertz\TranslationFactory\Controllers;
 
 use ChrisKonnertz\TranslationFactory\IO\TranslationReaderInterface;
 use ChrisKonnertz\TranslationFactory\TranslationFactory;
-use Illuminate\Config\Repository;
+use Illuminate\Config\Repository as Config;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -12,16 +12,16 @@ class TranslationFileController extends BaseController
 {
 
     /**
-     * @var Repository
+     * @var Config
      */
     protected $config;
 
     /**
      * TranslationFactoryController constructor.
      *
-     * @param Repository $config
+     * @param Config $config
      */
-    public function __construct(Repository $config)
+    public function __construct(Config $config)
     {
         if ($config->get(TranslationFactory::CONFIG_NAME.'.user_authentication')) {
             //$this->middleware('auth');

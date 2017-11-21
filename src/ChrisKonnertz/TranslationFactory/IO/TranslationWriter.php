@@ -5,8 +5,9 @@ namespace ChrisKonnertz\TranslationFactory\IO;
 // Note: We cannot use the contract Illuminate\Contracts\Filesystem\Filesystem here,
 // it does not contain all the methods that we expect.
 use ChrisKonnertz\TranslationFactory\TranslationBag;
+use ChrisKonnertz\TranslationFactory\TranslationFactory;
 use Illuminate\Filesystem\Filesystem;
-use function PHPSTORM_META\type;
+use Illuminate\Config\Repository as Config;
 
 class TranslationWriter implements TranslationWriterInterface
 {
@@ -27,13 +28,20 @@ class TranslationWriter implements TranslationWriterInterface
     protected $filesystem;
 
     /**
+     * @var Config
+     */
+    protected $config;
+
+    /**
      * TranslationWriter constructor.
      *
      * @param Filesystem $filesystem An instance of Laravel's filesystem class
+     * @param Config     $config     An instance of Laravel's config class
      */
-    public function __construct(Filesystem $filesystem)
+    public function __construct(Filesystem $filesystem, Config $config)
     {
         $this->filesystem = $filesystem;
+        $this->config = $config;
     }
 
     /**
@@ -65,9 +73,51 @@ class TranslationWriter implements TranslationWriterInterface
                 }
             }
 
+            $this->backup( $fileDir.$filename, $translationBag->getHash());
+
             $success = $this->filesystem->put($fileDir.$filename, $content);
             if ($success === false) {
-                throw new \Exception('Error: Could not write to file "'.$filename.'"');
+                throw new \Exception('Error: Could not write to file "'.$fileDir.$filename.'"');
+            }
+        }
+    }
+
+    /**
+     * Creates a backup of the original file (if necessary)
+     *
+     * @param string $originalFullFilename The filename of the original file
+     * @param string $hash                 The has of the translation bag
+     * @return void
+     * @throws \Exception
+     */
+    protected function backup(string $originalFullFilename, string $hash)
+    {
+        if ($this->config->get(TranslationFactory::CONFIG_NAME.'.auto_backups') !== true) {
+            return;
+        }
+
+        $backupDir = $this->config->get(TranslationFactory::CONFIG_NAME.'.backup_dir');
+
+        if ($this->filesystem->exists($originalFullFilename)) {
+            $backupFilename = $hash.'_'.date('d_m_y').'.backup';
+
+            // Ensure the path ends with a directory separator
+            if (substr($backupDir, -1) !== DIRECTORY_SEPARATOR) {
+                $backupDir .= DIRECTORY_SEPARATOR;
+            }
+
+            if (! $this->filesystem->exists($backupDir.$backupFilename)) {
+                if (! $this->filesystem->exists($backupDir)) {
+                    $success = $this->filesystem->makeDirectory($backupDir, 0755, true);
+                    if ($success === false) {
+                        throw new \Exception('Error: Could not create directory "'.$backupDir.'"');
+                    }
+                }
+
+                $success = $this->filesystem->copy($originalFullFilename, $backupDir.$backupFilename);
+                if ($success === false) {
+                    throw new \Exception('Error: Could not write to file "'.$backupDir.$backupFilename.'"');
+                }
             }
         }
     }
