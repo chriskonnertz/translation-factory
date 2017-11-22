@@ -2,6 +2,7 @@
 
 namespace ChrisKonnertz\TranslationFactory;
 
+use ChrisKonnertz\DeepLy\DeepLy;
 use ChrisKonnertz\TranslationFactory\IO\LanguageDetectorInterface;
 use ChrisKonnertz\TranslationFactory\IO\TranslationReaderInterface;
 use ChrisKonnertz\TranslationFactory\IO\TranslationWriterInterface;
@@ -15,7 +16,7 @@ class TranslationFactory
     /**
      * The version number
      */
-    const VERSION = '0.7';
+    const VERSION = '0.8';
 
     /**
      * Name of the config file (without extension) and name of the config namespace
@@ -53,6 +54,11 @@ class TranslationFactory
     protected $translationWriter;
 
     /**
+     * @var DeepLy
+     */
+    protected $deepLy;
+
+    /**
      * Array with the ISO codes of all languages that translators can translate into
      *
      * @var string[]
@@ -73,8 +79,43 @@ class TranslationFactory
         $this->userManager = $this->createUserManager();
         $this->translationReader = $this->createTranslationReader();
         $this->translationWriter = $this->createTranslationWriter();
+        $this->deepLy = new DeepLy();
 
         $this->detectLanguages();
+    }
+
+    /**
+     * Decides if a text in the given source language can be auto-translated to the given target language.
+     * This depends on two things: Does the DeepL API support the languages and does the DeeLy API client support them?
+     *
+     * @param string $sourceLanguage The language code of the source language, for example 'en'
+     * @param string $targetLanguage The language code of the target language, for example 'de'
+     * @return bool
+     */
+    public function canTranslate(string $sourceLanguage, string $targetLanguage)
+    {
+        return ($this->deepLy->supportsLangCode($sourceLanguage) and $this->deepLy->supportsLangCode($targetLanguage));
+    }
+
+    /**
+     * Tries to auto-translate a text via the API of DeepL.com
+     *
+     * @param string $text The text that has to be translated
+     * @return string
+     * @throws \Exception
+     */
+    public function translate(string $text)
+    {
+        $sourceLanguage = strtoupper($this->config->get('app.locale'));
+        $targetLanguage = strtoupper($this->getTargetLanguage());
+
+        try {
+            $translated = $this->deepLy->translate($text, $targetLanguage, $sourceLanguage);
+        } catch (\Exception $exception) {
+            throw new \Exception('Error: Unable to auto-translate the text');
+        }
+
+        return $translated;
     }
 
     /**

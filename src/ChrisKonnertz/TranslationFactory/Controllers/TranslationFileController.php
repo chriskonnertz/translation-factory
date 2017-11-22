@@ -81,7 +81,20 @@ class TranslationFileController extends BaseController
         $baseLanguage = $this->config->get('app.locale');
         $targetLanguage = $translationFactory->getTargetLanguage();
 
-        $data = compact('translationBag', 'currentItemKey', 'baseLanguage', 'targetLanguage');
+        $autoTranslation = null;
+        if (! $translationBag->hasTranslation($targetLanguage, $currentItemKey)) {
+            if ($translationFactory->canTranslate(strtoupper($baseLanguage), strtoupper($targetLanguage))) {
+                try {
+                    $autoTranslation = $translationFactory->translate(
+                        $translationBag->getTranslation($baseLanguage, $currentItemKey)
+                    );
+                } catch (\Exception $exception) {
+                    // do nothing
+                }
+            }
+        }
+
+        $data = compact('translationBag', 'currentItemKey', 'baseLanguage', 'targetLanguage', 'autoTranslation');
         return view('translationFactory::file', $data);
     }
 

@@ -109,13 +109,13 @@ class TranslationBag
     /**
      * Returns true if a specific item exists in the translations array.
      *
-     * @param string $language
+     * @param string $targetLanguage
      * @param string $key
      * @return bool
      */
-    public function hasTranslation(string $language, string $key)
+    public function hasTranslation(string $targetLanguage, string $key)
     {
-        return array_has($this->translations, $language.'.'.$key);
+        return array_has($this->translations, $targetLanguage.'.'.$key);
     }
 
     /**

@@ -46,7 +46,7 @@ Now the translators will be able to navigate to `http://<your-domain>/home` and 
 that implements the `UserManagerInterface`. Introduce it to Translation Factory by adding its name to the config file
 (key: `user_manager`). Publish the config with `php artisan vendor:publish`.
 
-## Use with External Translators
+## Use With External Translators
 
 If you want to use Translation Factory to let externals translators translate your texts, this is the recommended way:
 

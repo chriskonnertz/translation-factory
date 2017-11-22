@@ -62,9 +62,11 @@ class TranslationFactoryController extends BaseController
         $translationBags = $reader->readAll();
 
         $baseLanguage = $this->config->get('app.locale');
+        $currentTargetLanguage = $translationFactory->getTargetLanguage();
         $targetLanguages = $translationFactory->getTargetLanguages();
 
-        return view('translationFactory::home', compact('translationBags', 'baseLanguage', 'targetLanguages'));
+        $data = compact('translationBags', 'baseLanguage', 'currentTargetLanguage', 'targetLanguages');
+        return view('translationFactory::home', $data);
     }
 
     /**

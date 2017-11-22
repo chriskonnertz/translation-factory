@@ -13,7 +13,12 @@
         @php $options = '' @endphp
         @foreach($targetLanguages as $targetLang)
             @if ($targetLang !== Config::get('app.locale'))
-                @php $options .= '<option value="'.e($targetLang).'">'.e($targetLang).'</option>' @endphp
+                @if ($targetLang === $currentTargetLanguage)
+                    @php $selected = 'selected="selected"' @endphp
+                @else
+                    @php $selected = '' @endphp
+                @endif
+                @php $options .= '<option value="'.e($targetLang).'" '.$selected.'>'.e($targetLang).'</option>' @endphp
             @endif
         @endforeach
 
@@ -27,6 +32,10 @@
                         {!! $options !!}
                     </select>
                 </div>
+            </div>
+
+            <div class="toast toast-error save-error d-hide">
+                Could not save your choice. <a href="#">Retry?</a>
             </div>
         @else
             <div class="toast toast-error">
@@ -42,16 +51,6 @@
             <div class="divider text-center" data-content="{{ $currentDir }}"></div>
         @endif
         <div class="bag-tile-wrapper">
-            <!--
-            <a href="{{ url('translation-factory/file/'.$translationBag->getHash()) }}" class="bag-tile rounded" title="{{ $translationBag->getBaseFile() }}">
-                <div class="icon-wrapper">
-                    <i class="icon icon-message"></i>
-                </div>
-
-                <span class="name">{{ $translationBag->getName() }}</span>
-            </a>
-            -->
-
             <a href="{{ url('translation-factory/file/'.$translationBag->getHash()) }}" class="tile bag-tile rounded" title="{{ $translationBag->getBaseFile() }}">
                 <div class="tile-icon">
                     <div class="icon-wrapper">

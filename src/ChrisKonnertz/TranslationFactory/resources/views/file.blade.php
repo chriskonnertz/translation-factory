@@ -32,9 +32,11 @@
 
                     <blockquote class="bg-gray">
                         @php $originalText = array_get($translationBag->getTranslations()[$translationBag->getBaseLanguage()], $currentItemKey) @endphp
-                        <p>{!! preg_replace('/(:\w+|\||\{\d*\}|\[\d*,(\d*|\*)])/',
-                        '<span title=":\w+ = parameter, | = choice, {\d*} = exact amount, [\d,\d|*] = range">${1}</span>',
-                        htmlspecialchars($originalText)) !!}</p>
+                        <!-- /&lt;/b&gt; -->
+                        @php $originalText = preg_replace(['/(&lt;\/?\w+&gt;)/', '/(:\w+|\||\{\d*\}|\[\d*,(\d*|\*)])/'],
+                        ['<span title="HTML Tag">${1}</span>', '<span title=":\w+ = parameter, | = choice, {\d*} = exact amount, [\d,\d|*] = range">${1}</span>'],
+                        htmlspecialchars($originalText)) @endphp
+                        <p>{!! $originalText !!}</p>
                     </blockquote>
                 </div>
 
@@ -42,7 +44,7 @@
                     <label class="form-label" for="translation">Translation to <a href="https://www.loc.gov/standards/iso639-2/php/langcodes_name.php?iso_639_1={{ $targetLanguage }}" target="_blank"><i>{{ $targetLanguage }}</i></a>:</label>
 
                     {{-- One giant line to avoid issues with whitespace --}}
-                    <textarea class="form-input" id="translation" name="translation" placeholder="Please enter your translation here" rows="5">@if($translationBag->hasTranslation($targetLanguage, $currentItemKey)){{ $translationBag->getTranslation($targetLanguage, $currentItemKey) }}@endif</textarea>
+                    <textarea class="form-input" id="translation" name="translation" placeholder="Please enter your translation here" rows="5">@if($translationBag->hasTranslation($targetLanguage, $currentItemKey)){{ $translationBag->getTranslation($targetLanguage, $currentItemKey) }}@else{{ $autoTranslation }}@endif</textarea>
 
                     <progress class="progress save-progress d-invisible" max="100" title="Saving..."></progress>
 
@@ -160,6 +162,12 @@
                     textArea.value = decodeHtmlEntity('{{ $originalText }}');
                     save();
                 });
+            @endif
+
+            @if ($autoTranslation)
+                // We have to set the dirty flag to true here, because if not auto-saving won't happen
+                // until the user changes the text - but that would not happen if there is a perfect translation
+                textAreaDirty = true;
             @endif
 
             // When the user clicks on an a-element without the href-attribute set, do nothing
