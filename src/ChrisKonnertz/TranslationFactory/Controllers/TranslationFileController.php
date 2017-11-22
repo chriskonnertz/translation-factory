@@ -51,8 +51,10 @@ class TranslationFileController extends BaseController
         $translationBag = $this->getBagByHash($translationReader, $hash);
 
         $currentItemKey = null;
+        $autoTranslation = null;
         $targetLanguage = $translationFactory->getTargetLanguage();
-        return view('translationFactory::file', compact('translationBag', 'currentItemKey', 'targetLanguage'));
+        $data = compact('translationBag', 'currentItemKey', 'targetLanguage', 'autoTranslation');
+        return view('translationFactory::file', $data);
     }
 
     /**
