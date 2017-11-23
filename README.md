@@ -13,6 +13,15 @@ Especially it helps to coordinate multiple translators, aiding them with AI tran
 
 > Note: "Factory" does not mean the pattern here but rather this: 🏭
 
+## Highlights
+
+* Seamless integration into your existing Laravel application
+* Uses DeepL - currently the best machine translation engine - to auto-translate texts
+* Beautiful user inteface and made with a good user experience in mind
+* Exlusively made for Laravel which makes installation a piece of cake
+* Highly configurable and easy to extend
+* Open source and free even for commercial use
+
 ## Installation
 
 Through [Composer](https://getcomposer.org/):
@@ -44,7 +53,7 @@ Now the translators will be able to navigate to `http://<your-domain>/home` and 
 
 > If you do not want to use Laravel's built-in user authentication system you have to create your own user manager 
 that implements the `UserManagerInterface`. Introduce it to Translation Factory by adding its name to the config file
-(key: `user_manager`). Publish the config with `php artisan vendor:publish`.
+(key: `user_manager`).
 
 ## Use With External Translators
 
@@ -53,7 +62,7 @@ If you want to use Translation Factory to let externals translators translate yo
 1. Setup a new server with your application. The server has to be reachable from the outside.
 2. Make sure Translation Factory can write into the output directories.
 3. Let the externals create their user accounts (`http://<your-domain>/home`)
-4. Happy translating!
+4. Spread the link: `http://<your-domain>/translation-factory`
 
 ## Configuration
 
@@ -63,8 +72,8 @@ Open `config/translation_factory.php` to change the configuration. All settings 
 
 The default behaviour of Translation Factory is to make daily backups of all translation files
  that it wants to overwrite. They will be stored in `<storage-path>/app/translations` which usually
- translates to `storage/app/translations`. Their names will be built of a hash and the date 
- and use ".backup" as extension.
+ translates to `storage/app/translations`. You may change this path in the config file (key: `backup_dir`). 
+ The names of the backup files will be built of a hash and the date and use ".backup" as extension.
 
 ## Current State
 
