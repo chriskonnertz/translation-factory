@@ -25,7 +25,7 @@
         @if ($options !== '')
             <div class="form-group">
                 <div class="col-3">
-                    <label class="form-label" for="target-language">Translate from <a href="https://www.loc.gov/standards/iso639-2/php/langcodes_name.php?iso_639_1={{ $baseLanguage }}" target="_blank"><i>{{ $baseLanguage }}</i></a> to:</label>
+                    <label class="form-label" for="target-language">Translate from <a href="https://www.loc.gov/standards/iso639-2/php/langcodes_name.php?iso_639_1={{ $baseLanguage }}" target="_blank"><i>{{ $baseLanguage }}</i></a> into:</label>
                 </div>
                 <div class="col-9">
                     <select class="form-select" id="target-language" name="target_language">

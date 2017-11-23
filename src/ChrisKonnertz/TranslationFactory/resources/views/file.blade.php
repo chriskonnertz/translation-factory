@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="translation">Translation to <a href="https://www.loc.gov/standards/iso639-2/php/langcodes_name.php?iso_639_1={{ $targetLanguage }}" target="_blank"><i>{{ $targetLanguage }}</i></a>:</label>
+                    <label class="form-label" for="translation">Translation into <a href="https://www.loc.gov/standards/iso639-2/php/langcodes_name.php?iso_639_1={{ $targetLanguage }}" target="_blank"><i>{{ $targetLanguage }}</i></a>:</label>
 
                     {{-- One giant line to avoid issues with whitespace --}}
                     <textarea class="form-input" id="translation" name="translation" placeholder="Please enter your translation here" rows="5">@if($translationBag->hasTranslation($targetLanguage, $currentItemKey)){{ $translationBag->getTranslation($targetLanguage, $currentItemKey) }}@else{{ $autoTranslation }}@endif</textarea>

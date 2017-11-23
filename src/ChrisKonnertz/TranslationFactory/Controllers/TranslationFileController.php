@@ -6,6 +6,7 @@ use ChrisKonnertz\TranslationFactory\IO\TranslationReaderInterface;
 use ChrisKonnertz\TranslationFactory\TranslationFactory;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Http\Request;
+use Illuminate\Log\Writer as Log;
 
 class TranslationFileController extends AuthController
 {
@@ -22,10 +23,6 @@ class TranslationFileController extends AuthController
      */
     public function __construct(Config $config)
     {
-        if ($config->get(TranslationFactory::CONFIG_NAME.'.user_authentication')) {
-            //$this->middleware('auth');
-        }
-
         $this->config = $config;
     }
 
@@ -93,10 +90,11 @@ class TranslationFileController extends AuthController
      * Updates a translation item
      *
      * @param Request $request
+     * @param Log     $log
      * @param string  $hash
      * @param string  $currentItemKey
      */
-    public function update(Request $request, string $hash, string $currentItemKey)
+    public function update(Request $request, Log $log, string $hash, string $currentItemKey)
     {
         $this->ensureAuth();
 
@@ -118,6 +116,12 @@ class TranslationFileController extends AuthController
 
         $translationWriter = $translationFactory->getTranslationWriter();
         $translationWriter->write($translationBag);
+
+        if ($this->config->get(TranslationFactory::CONFIG_NAME.'.user_authentication') === true) {
+            $log->info('User with ID '.$translationFactory->getUserManager()->getCurrentUserId().
+                ' translated item "'.$currentItemKey.'" of file "'.$translationBag->getBaseFile().'" from "'.
+                $translationBag->getBaseLanguage().'" into "'.$translationFactory->getTargetLanguage().'"');
+        }
     }
 
     /**
