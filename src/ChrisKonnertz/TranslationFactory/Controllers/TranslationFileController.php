@@ -6,9 +6,8 @@ use ChrisKonnertz\TranslationFactory\IO\TranslationReaderInterface;
 use ChrisKonnertz\TranslationFactory\TranslationFactory;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
 
-class TranslationFileController extends BaseController
+class TranslationFileController extends AuthController
 {
 
     /**
@@ -38,14 +37,10 @@ class TranslationFileController extends BaseController
      */
     public function index(string $hash)
     {
+        $this->ensureAuth();
+
         /** @var TranslationFactory $translationFactory */
         $translationFactory = app()->get('translation-factory');
-
-        $loggedIn = $translationFactory->getUserManager()->isLoggedIn();
-
-        if (! $loggedIn) {
-            #return redirect(url('/'));
-        }
 
         $translationReader = $translationFactory->getTranslationReader();
         $translationBag = $this->getBagByHash($translationReader, $hash);
@@ -66,16 +61,10 @@ class TranslationFileController extends BaseController
      */
     public function edit(string $hash, string $currentItemKey)
     {
+        $this->ensureAuth();
+
         /** @var TranslationFactory $translationFactory */
         $translationFactory = app()->get('translation-factory');
-
-        if ($this->config->get(TranslationFactory::CONFIG_NAME.'.user_authentication') === true) {
-            $loggedIn = $translationFactory->getUserManager()->isLoggedIn();
-
-            if (!$loggedIn) {
-                return redirect(url('/'));
-            }
-        }
 
         $translationReader = $translationFactory->getTranslationReader();
         $translationBag = $this->getBagByHash($translationReader, $hash);
@@ -109,7 +98,7 @@ class TranslationFileController extends BaseController
      */
     public function update(Request $request, string $hash, string $currentItemKey)
     {
-        // TODO Add user checks
+        $this->ensureAuth();
 
         $translation = $request->input('translation');
 
@@ -141,6 +130,8 @@ class TranslationFileController extends BaseController
      */
     public function getBagByHash(TranslationReaderInterface $translationReader, string $hash)
     {
+        $this->ensureAuth();
+
         $translationBags = $translationReader->readAll();
 
         $currentBag = null;

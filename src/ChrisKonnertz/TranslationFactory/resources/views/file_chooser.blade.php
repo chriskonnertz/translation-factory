@@ -92,6 +92,10 @@
                 var form = document.querySelector('form');
                 var data = new FormData(form);
 
+                // We have to manually add the CSRF token
+                var token = document.head.querySelector('meta[name="csrf-token"]').content;
+                data.append('_token', token);
+
                 document.querySelector('.save-error').classList.add('d-hide');
 
                 request.addEventListener('readystatechange', function() {

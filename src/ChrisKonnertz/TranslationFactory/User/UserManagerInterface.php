@@ -36,4 +36,12 @@ interface UserManagerInterface
      */
     public function logoutCurrentUser();
 
+    /**
+     * This method throws an adequate exception if the user is not authenticated
+     * but tries to access something that needs the user to be authorized.
+     *
+     * @throws \Exception
+     */
+    public function throwAuthenticationException();
+
 }

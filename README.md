@@ -16,7 +16,7 @@ Especially it helps to coordinate multiple translators, aiding them with AI tran
 ## Highlights
 
 * Seamless integration into your existing Laravel application
-* Uses DeepL - currently the best machine translation engine - to auto-translate texts
+* Uses [DeepL](https://www.deepl.com/) - currently the best machine translation engine - to auto-translate texts
 * Beautiful user inteface and made with a good user experience in mind
 * Exlusively made for Laravel which makes installation a piece of cake
 * Highly configurable and easy to extend
@@ -61,7 +61,7 @@ If you want to use Translation Factory to let externals translators translate yo
 
 1. Setup a new server with your application. The server has to be reachable from the outside.
 2. Make sure Translation Factory can write into the output directories.
-3. Let the externals create their user accounts (`http://<your-domain>/home`)
+3. Let the externals create their user accounts (`http://<your-domain>/register`)
 4. Spread the link: `http://<your-domain>/translation-factory`
 
 ## Configuration
@@ -80,3 +80,16 @@ The default behaviour of Translation Factory is to make daily backups of all tra
 This is an MVP (minimum viable product). The code quality is okay, but for sure it is not great. 
 There is a lot of space for refactoring. This will happen if it turns out that this package actually meets 
 someones needs. 
+
+
+## FAQ
+
+* **Does this also work with Laravel 5.4?** Maybe. Not tested, though. And you have to register the `TranslationFactoryServiceProvider`.
+* **Which languages can be auto-translated?** Here is a list: [Link](https://github.com/chriskonnertz/DeepLy#supported-languages)
+* **Should I use [barryvdh/laravel-translation-manager](https://github.com/barryvdh/laravel-translation-manager)?**
+LTM offers some features that help to handle translations, for example finding translations that are missing in the
+translations files. That makes it a good addition to Translation Factory. Translation Factory on the other hand is
+ focused on translating. It has a sophisticated user interface and uses DeepL to help the translator, which makes it a
+ good choice for translating.
+* **I got this exception: "SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was too long; max key length is 767 bytes"**
+Here is a solution: [Link](https://laravel-news.com/laravel-5-4-key-too-long-error)

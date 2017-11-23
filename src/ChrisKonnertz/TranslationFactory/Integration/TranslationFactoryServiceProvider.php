@@ -63,16 +63,18 @@ class TranslationFactoryServiceProvider extends ServiceProvider
         /** @var \Illuminate\Routing\Router $router */
         $router = $this->app->get('router');
 
-        $controllerName = TranslationFactoryController::class;
-        $router->get('translation-factory', $controllerName . '@index');
-        $router->post('translation-factory', $controllerName . '@update');
-        $router->get('translation-factory/config', $controllerName . '@config');
-        $router->get('translation-factory/logout', $controllerName . '@logout');
+        $router->group(['middleware' => 'web'], function () use ($router) {
+            $controllerName = TranslationFactoryController::class;
+            $router->get('translation-factory', $controllerName . '@index');
+            $router->post('translation-factory', $controllerName . '@update');
+            $router->get('translation-factory/config', $controllerName . '@config');
+            $router->get('translation-factory/logout', $controllerName . '@logout');
 
-        $controllerName = TranslationFileController::class;
-        $router->get('translation-factory/file/{hash}', $controllerName . '@index');
-        $router->get('translation-factory/file/{hash}/item/{currentItemKey}', $controllerName . '@edit');
-        $router->post('translation-factory/file/{hash}/item/{currentItemKey}', $controllerName . '@update');
+            $controllerName = TranslationFileController::class;
+            $router->get('translation-factory/file/{hash}', $controllerName . '@index');
+            $router->get('translation-factory/file/{hash}/item/{currentItemKey}', $controllerName . '@edit');
+            $router->post('translation-factory/file/{hash}/item/{currentItemKey}', $controllerName . '@update');
+        });
     }
 
 }

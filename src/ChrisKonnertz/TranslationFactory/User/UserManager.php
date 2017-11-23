@@ -2,6 +2,7 @@
 
 namespace ChrisKonnertz\TranslationFactory\User;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -52,6 +53,17 @@ class UserManager implements UserManagerInterface
     public function logoutCurrentUser()
     {
         Auth::logout();
+    }
+
+    /**
+     * This method throws an adequate exception if the user is not authenticated
+     * but tries to access something that needs the user to be authorized.
+     *
+     * @throws \Exception
+     */
+    public function throwAuthenticationException()
+    {
+        throw new AuthenticationException();
     }
 
 }

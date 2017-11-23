@@ -6,9 +6,8 @@ use ChrisKonnertz\TranslationFactory\TranslationFactory;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
 
-class TranslationFactoryController extends BaseController
+class TranslationFactoryController extends AuthController
 {
 
     /**
@@ -23,11 +22,6 @@ class TranslationFactoryController extends BaseController
      */
     public function __construct(Config $config)
     {
-        // TODO Remove // or delete the whole statement
-        if ($config->get(TranslationFactory::CONFIG_NAME.'.user_authentication') === true) {
-            //$this->middleware('auth');
-        }
-
         $this->config = $config;
     }
 
@@ -47,16 +41,10 @@ class TranslationFactoryController extends BaseController
             );
         }
 
+        $this->ensureAuth();
+
         /** @var TranslationFactory $translationFactory */
         $translationFactory = app()->get('translation-factory');
-
-        if ($this->config->get(TranslationFactory::CONFIG_NAME.'.user_authentication') === true) {
-            $loggedIn = $translationFactory->getUserManager()->isLoggedIn();
-
-            if (!$loggedIn) {
-                return redirect(url('/'));
-            }
-        }
 
         $reader = $translationFactory->getTranslationReader();
         $translationBags = $reader->readAll();
@@ -79,6 +67,8 @@ class TranslationFactoryController extends BaseController
      */
     public function update(Request $request, Cache $cache)
     {
+        $this->ensureAuth();
+
         $targetLanguage = $request->input('target_language');
 
         // Ensure the language code only consists of alphabetical characters
@@ -89,13 +79,7 @@ class TranslationFactoryController extends BaseController
         /** @var TranslationFactory $translationFactory */
         $translationFactory = app()->get('translation-factory');
 
-        $loggedIn = $translationFactory->getUserManager()->isLoggedIn();
-
         if ($this->config->get(TranslationFactory::CONFIG_NAME.'.user_authentication') === true) {
-            if (! $loggedIn) {
-                return redirect(url('/'));
-            }
-
             $cache->forever(TranslationFactory::CACHE_KEY.'.'.$translationFactory->getUserManager()->getCurrentUserId().
                 '.target_language', $targetLanguage);
         } else {
@@ -112,6 +96,8 @@ class TranslationFactoryController extends BaseController
      */
     public function config()
     {
+        $this->ensureAuth();
+
         $configValues = $this->config->get(TranslationFactory::CONFIG_NAME);
 
         return view('translationFactory::config', compact('configValues'));
