@@ -154,8 +154,6 @@ class TranslationWriter implements TranslationWriterInterface
 
             if (is_array($item)) {
                 $code .= $this->arrayToCode($item, $level + 1);
-            } elseif (is_string($item)) {
-                $code .= var_export($item, true);
             } else {
                 $code .= var_export($item, true);
             }
