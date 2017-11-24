@@ -41,7 +41,7 @@ Nevertheless you have to publish the assets via: `php artisan vendor:publish --p
 
 Then you may navigate to `http://<your-domain>/translation-factory` to start. 
 
-## Prepare Laravel
+## User Accounts With Laravel
 
 This package supports user authentication. Per default it depends on Laravel's built-in user authentication system.
 If you already use Laravel's user authentication then you can skip this section. 
