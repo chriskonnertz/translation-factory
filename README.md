@@ -19,7 +19,7 @@ Especially it helps to coordinate multiple translators, aiding them with AI tran
 * Uses [DeepL](https://www.deepl.com/) - currently the best machine translation engine - to auto-translate texts
 * Beautiful user inteface and made with a good user experience in mind
 * Well prepared for mobile devices (smartphones and tablets)
-* Exlusively made for Laravel which makes installation a piece of cake
+* Exlusively made for Laravel which makes the installation a piece of cake
 * Highly configurable and easy to extend
 * Open source and free even for commercial use
 
