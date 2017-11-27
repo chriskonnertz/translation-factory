@@ -2,6 +2,15 @@
 
 namespace ChrisKonnertz\TranslationFactory\User;
 
+use Illuminate\Database\Eloquent\Collection;
+
+/**
+ * A class that implements this interface is an abstraction of the User facade.
+ * It can be replaced by a custom user manager in the config file.
+ *
+ * Attention: The user manager must not care if user authentication
+ * has been activated in the config file or not.
+ */
 interface UserManagerInterface
 {
 
@@ -14,9 +23,16 @@ interface UserManagerInterface
     public function isLoggedIn();
 
     /**
+     * Returns true if the current client is a user with admin permissions.
+     * Returns false if the client is not logged in.
+     *
+     * @return bool
+     */
+    public function isAdmin();
+
+    /**
      * Returns the current user object or null.
-     * Call getCurrentUserId() instead if you only
-     * want to to get the ID of the current user.
+     * The user object should be or extend the \App\User class.
      *
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
@@ -30,7 +46,7 @@ interface UserManagerInterface
     public function getCurrentUserId();
 
     /**
-     * Logs out the current user
+     * Logs the current user out
      *
      * @return void
      */
@@ -38,10 +54,18 @@ interface UserManagerInterface
 
     /**
      * This method throws an adequate exception if the user is not authenticated
-     * but tries to access something that needs the user to be authorized.
+     * but tries to access something that needs the user to be authenticated.
      *
      * @throws \Exception
      */
     public function throwAuthenticationException();
+
+    /**
+     * Returns a collection of all users.
+     * The user objects should be or extend the \App\User class.
+     *
+     * @return Collection
+     */
+    public function getAllUsers();
 
 }

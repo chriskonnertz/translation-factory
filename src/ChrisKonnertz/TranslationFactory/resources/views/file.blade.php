@@ -6,7 +6,7 @@
     <div class="header">
         <h1 title="{{ $translationBag->getBaseFile() }}">{{ $translationBag->getTitle() }}</h1>
 
-        <p class="initial-info-text">
+        <p class="page-info-text">
             Choose a translation item from the items below, then you will be able to edit it.
             Translations will be saved automatically.
         </p>

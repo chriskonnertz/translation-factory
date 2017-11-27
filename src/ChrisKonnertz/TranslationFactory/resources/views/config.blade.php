@@ -6,7 +6,7 @@
     <div class="header">
         <h1>Config</h1>
 
-        <p class="initial-info-text">
+        <p class="page-info-text">
             Below you can see all the configuration values of this package.
         </p>
     </div>
@@ -22,7 +22,7 @@
             </thead>
             <tbody>
                 @foreach($configValues as $configKey => $configValue)
-                    <tr class="">
+                    <tr>
                         <td>
                             {{ $configKey }}
                         </td>

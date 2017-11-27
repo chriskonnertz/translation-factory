@@ -1,3 +1,4 @@
+@inject('translationFactory', 'translation-factory')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -215,7 +216,7 @@
             }
         }
 
-        .initial-info-text {
+        .page-info-text {
             margin-bottom: 2rem;
         }
         .items-box ul {
@@ -278,14 +279,21 @@
                 <li>
                     <a href="https://github.com/chriskonnertz/translation-factory/issues" target="_blank">Support</a>
                 </li>
-                <li>
-                    <a href="{{ url('/translation-factory/config') }}">Config</a>
-                </li>
-                @auth
+                @if ($translationFactory->getUserManager()->isAdmin())
+                    <li>
+                        <a href="{{ url('/translation-factory/users') }}">Accounts</a>
+                    </li>
+                @endif
+                @if ($translationFactory->getUserManager()->isAdmin())
+                    <li>
+                        <a href="{{ url('/translation-factory/config') }}">Config</a>
+                    </li>
+                @endif
+                @if ($translationFactory->getUserManager()->isLoggedIn())
                     <li>
                         <a href="{{ url('/translation-factory/logout') }}">Logout</a>
                     </li>
-                @endauth
+                @endif
             </ul>
         </nav>
     </aside>

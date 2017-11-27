@@ -12,24 +12,9 @@ class TranslationFileController extends AuthController
 {
 
     /**
-     * @var Config
-     */
-    protected $config;
-
-    /**
-     * TranslationFactoryController constructor.
-     *
-     * @param Config $config
-     */
-    public function __construct(Config $config)
-    {
-        $this->config = $config;
-    }
-
-    /**
      * Index page of the package
      *
-     * @param string $hash $config
+     * @param string $hash The hash value that identifies the translation bag
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(string $hash)
@@ -52,8 +37,8 @@ class TranslationFileController extends AuthController
     /**
      * Shows the translation file page with a text area for editing a translation item
      *
-     * @param string $hash
-     * @param string $currentItemKey
+     * @param string $hash           The hash value that identifies the translation bag
+     * @param string $currentItemKey The key of the current translation item (in dot notation)
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(string $hash, string $currentItemKey)
@@ -89,10 +74,10 @@ class TranslationFileController extends AuthController
     /**
      * Updates a translation item
      *
-     * @param Request $request
-     * @param Log     $log
-     * @param string  $hash
-     * @param string  $currentItemKey
+     * @param Request $request        An instance of Laravel's request class
+     * @param Log     $log            An instance of Laravel's logging class
+     * @param string  $hash           The hash value that identifies the translation bag
+     * @param string  $currentItemKey The key of the current translation item (in dot notation)
      */
     public function update(Request $request, Log $log, string $hash, string $currentItemKey)
     {
@@ -127,14 +112,15 @@ class TranslationFileController extends AuthController
     /**
      * Returns a translation bag that is identified by its hash
      *
-     * @param TranslationReaderInterface $translationReader
-     * @param string                     $hash
+     * @param TranslationReaderInterface $translationReader An instance of the translation reader interface
+     * @param string                     $hash              The hash value that identifies the translation bag
      * @return \ChrisKonnertz\TranslationFactory\TranslationBag
      * @throws \Exception
      */
     public function getBagByHash(TranslationReaderInterface $translationReader, string $hash)
     {
-        $this->ensureAuth();
+        # TODO remove this ensureAuth() call?
+        #$this->ensureAuth();
 
         $translationBags = $translationReader->readAll();
 

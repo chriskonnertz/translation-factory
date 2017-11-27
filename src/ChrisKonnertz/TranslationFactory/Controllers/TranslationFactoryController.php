@@ -3,27 +3,11 @@
 namespace ChrisKonnertz\TranslationFactory\Controllers;
 
 use ChrisKonnertz\TranslationFactory\TranslationFactory;
-use Illuminate\Config\Repository as Config;
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Http\Request;
 
 class TranslationFactoryController extends AuthController
 {
-
-    /**
-     * @var Config
-     */
-    protected $config;
-
-    /**
-     * TranslationFactoryController constructor.
-     *
-     * @param Config $config
-     */
-    public function __construct(Config $config)
-    {
-        $this->config = $config;
-    }
 
     /**
      * Index page of the package
@@ -96,7 +80,7 @@ class TranslationFactoryController extends AuthController
      */
     public function config()
     {
-        $this->ensureAuth();
+        $this->ensurePermission();
 
         $configValues = $this->config->get(TranslationFactory::CONFIG_NAME);
 
