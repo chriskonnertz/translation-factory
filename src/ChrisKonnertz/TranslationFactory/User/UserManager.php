@@ -8,6 +8,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
+use Schema;
 
 /**
  * The UserManager class is an abstraction of the User facade.
@@ -117,4 +118,21 @@ class UserManager implements UserManagerInterface
     {
         return User::all();
     }
+
+    /**
+     * Prepares the database (creates tables or add columns)
+     */
+    public function prepareDatabase()
+    {
+        // TODO Do not use the Schema facade but the underlying object instead.
+        // Unknown how to get it though. \Illuminate\Database\Schema\Builder won't work and
+        // \Illuminate\Database\Schema\MySqlBuilder is to specific.
+        if (! Schema::hasColumn('users', TranslationFactory::DB_PREFIX.'_activated')) {
+            // Add a column to the users table that decides if a user is activated
+            Schema::table('users', function ($table) {
+                $table->boolean(TranslationFactory::DB_PREFIX.'_activated')->default(false);
+            });
+        }
+    }
+
 }

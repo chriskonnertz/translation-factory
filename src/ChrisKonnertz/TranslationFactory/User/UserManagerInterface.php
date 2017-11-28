@@ -68,4 +68,9 @@ interface UserManagerInterface
      */
     public function getAllUsers();
 
+    /**
+     * Prepares the database (creates tables or add columns)
+     */
+    public function prepareDatabase();
+
 }

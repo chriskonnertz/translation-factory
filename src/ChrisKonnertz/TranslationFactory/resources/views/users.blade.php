@@ -19,6 +19,7 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Registered at</th>
+                    <th>Activated</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,6 +36,13 @@
                         </td>
                         <td>
                             {{ $user->created_at }}
+                        </td>
+                        <td>
+                            @if ($user->{'translation_factory'.'_activated'})
+                                <span title="true">✓</span>
+                            @else
+                                <span title="false">🞪</span>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

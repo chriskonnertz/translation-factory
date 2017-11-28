@@ -17,9 +17,9 @@ Especially it helps to coordinate multiple translators, aiding them with AI tran
 
 * Seamless integration into your existing Laravel application
 * Uses [DeepL](https://www.deepl.com/) - currently the best machine translation engine - to auto-translate texts
-* Beautiful user inteface and made with a good user experience in mind
+* Beautiful user interface and made with a good user experience in mind
 * Well prepared for mobile devices (smartphones and tablets)
-* Exlusively made for Laravel which makes the installation a piece of cake
+* Exclusively made for Laravel which makes the installation a piece of cake
 * Highly configurable and easy to extend
 * Open source and free even for commercial use
 
@@ -44,7 +44,9 @@ Then you may navigate to `http://<your-domain>/translation-factory` to start.
 ## User Accounts With Laravel
 
 This package supports user authentication. Per default it depends on Laravel's built-in user authentication system.
-If you already use Laravel's user authentication then you can skip this section. 
+The first step is to add the User IDs of all administrators to the config file (key: `user_admin_ids`). 
+
+If you already use Laravel's user authentication then you can skip the rest of this section. 
 But if you have a fresh installation of Laravel follow these steps to prepare it:
 
 1. Via a console run `php artisan make:auth` to create resources like a controller and views
@@ -64,6 +66,7 @@ If you want to use Translation Factory to let externals translators translate yo
 2. Make sure Translation Factory can write into the output directories.
 3. Let the externals create their user accounts (`http://<your-domain>/register`)
 4. Spread the link: `http://<your-domain>/translation-factory`
+5. Activate the translators
 
 ## Configuration
 

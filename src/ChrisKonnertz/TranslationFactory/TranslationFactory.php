@@ -29,6 +29,11 @@ class TranslationFactory
     const CACHE_KEY = 'translation_factory';
 
     /**
+     * Prefix used in the DB for example for column names
+     */
+    const DB_PREFIX = 'translation_factory';
+
+    /**
      * @var Config
      */
     protected $config;

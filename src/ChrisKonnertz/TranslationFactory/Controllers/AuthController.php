@@ -39,9 +39,15 @@ class AuthController extends BaseController
         $translationFactory = app()->get('translation-factory');
 
         if ($this->config->get(TranslationFactory::CONFIG_NAME.'.user_authentication')) {
-            $isLoggedIn = $translationFactory->getUserManager()->isLoggedIn();
+            $userManager = $translationFactory->getUserManager();
 
-            if (! $isLoggedIn) {
+            if (! $userManager->isLoggedIn()) {
+                $translationFactory->getUserManager()->throwAuthenticationException();
+            }
+
+            if (! $userManager->getCurrentUser()->{TranslationFactory::DB_PREFIX.'_activated'}) {
+                // Throwing an authentication exception is not 100% right
+                // (it should be an authorization exception) but easy to implement
                 $translationFactory->getUserManager()->throwAuthenticationException();
             }
         }
@@ -56,6 +62,8 @@ class AuthController extends BaseController
      * That's not a perfect reaction but easy to implement
      * and it is only the server-side check, so the user should
      * never see it.
+     * Attention: This method does not check if the user is activated,
+     * so admins will always considered to be activated!
      *
      * @return void
      * @throws \Exception
@@ -66,9 +74,9 @@ class AuthController extends BaseController
         $translationFactory = app()->get('translation-factory');
 
         if ($this->config->get(TranslationFactory::CONFIG_NAME.'.user_authentication')) {
-            $isAdmin = $translationFactory->getUserManager()->isAdmin();
+            $userManager = $translationFactory->getUserManager();
 
-            if (! $isAdmin) {
+            if (! $userManager->isAdmin()) {
                 // Throwing an authentication exception is not 100% right
                 // (it should be an authorization exception) but easy to implement
                 $translationFactory->getUserManager()->throwAuthenticationException();

@@ -27,8 +27,10 @@
                             {{ $configKey }}
                         </td>
                         <td>
-                            @if (is_array($configValue))
-                                {{ implode(', ', $configValue) }}
+                            @if ($configValue === '' or $configValue === null or $configValue === [])
+                                <em>empty</em>
+                            @elseif (is_array($configValue))
+                                <span class="label">{!! implode('</span>, <span class="label">', $configValue) !!}</span>
                             @elseif (is_bool($configValue))
                                 @if ($configValue)
                                     <span title="true">✓</span>

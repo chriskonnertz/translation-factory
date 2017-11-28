@@ -12,18 +12,12 @@ class TranslationFactoryController extends AuthController
     /**
      * Index page of the package
      *
+     * @param Cache $cache
      * @return \Illuminate\View\View
-     * @throws \Exception
      */
-    public function index()
+    public function index(Cache $cache)
     {
-        if ($this->config->get(TranslationFactory::CONFIG_NAME.'.user_authentication') === null) {
-            throw new \Exception(
-                'Please publish the assets of the Translation Factory package via: '.
-                '"php artisan vendor:publish '.
-                '--provider="ChrisKonnertz\TranslationFactory\Integration\TranslationFactoryServiceProvider"'
-            );
-        }
+        $this->prepare($cache);
 
         $this->ensureAuth();
 
@@ -39,6 +33,34 @@ class TranslationFactoryController extends AuthController
 
         $data = compact('translationBags', 'baseLanguage', 'currentTargetLanguage', 'targetLanguages');
         return view('translationFactory::home', $data);
+    }
+
+    /**
+     * This is some kind of setup method. It ensure that the config has been published
+     * and that the database has been prepared.
+     *
+     * @param Cache $cache
+     * @throws \Exception
+     */
+    protected function prepare(Cache $cache)
+    {
+        if ($this->config->get(TranslationFactory::CONFIG_NAME.'.user_authentication') === null) {
+            throw new \Exception(
+                'Please publish the assets of the Translation Factory package via: '.
+                '"php artisan vendor:publish '.
+                '--provider="ChrisKonnertz\TranslationFactory\Integration\TranslationFactoryServiceProvider"'
+            );
+        }
+
+        // To avoid unnecessary DB checks we set a flag in the cache if we do not need to check the DB
+        if (! $cache->has(TranslationFactory::CACHE_KEY.'.db_check')) {
+            /** @var TranslationFactory $translationFactory */
+            $translationFactory = app()->get('translation-factory');
+
+            $translationFactory->getUserManager()->prepareDatabase();
+
+            $cache->forever(TranslationFactory::CACHE_KEY.'.db_check', time());
+        }
     }
 
     /**
