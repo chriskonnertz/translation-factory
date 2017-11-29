@@ -71,7 +71,7 @@ class UserManager implements UserManagerInterface
      * Call getCurrentUserId() instead if you only
      * want to to get the ID of the current user.
      *
-     * @return \Illuminate\Contracts\Auth\Authenticatable|null
+     * @return \Illuminate\Foundation\Auth\User|null
      */
     public function getCurrentUser()
     {
@@ -114,9 +114,20 @@ class UserManager implements UserManagerInterface
      *
      * @return Collection
      */
-    public function getAllUsers()
+    public function findAllUsers()
     {
         return User::all();
+    }
+
+    /**
+     * Returns a user who is identified by the ID
+     *
+     * @param int $id
+     * @return \Illuminate\Foundation\Auth\User
+     */
+    public function findUser(int $id)
+    {
+        return User::whereId($id)->firstOrFail();
     }
 
     /**

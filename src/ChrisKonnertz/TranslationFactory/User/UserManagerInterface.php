@@ -34,7 +34,7 @@ interface UserManagerInterface
      * Returns the current user object or null.
      * The user object should be or extend the \App\User class.
      *
-     * @return \Illuminate\Contracts\Auth\Authenticatable|null
+     * @return \Illuminate\Foundation\Auth\User|null
      */
     public function getCurrentUser();
 
@@ -63,10 +63,19 @@ interface UserManagerInterface
     /**
      * Returns a collection of all users.
      * The user objects should be or extend the \App\User class.
+     * At least it has to be an Eloquent model with the same attributes.
      *
      * @return Collection
      */
-    public function getAllUsers();
+    public function findAllUsers();
+
+    /**
+     * Returns a user who is identified by the ID
+     *
+     * @param int $id
+     * @return \Illuminate\Foundation\Auth\User
+     */
+    public function findUser(int $id);
 
     /**
      * Prepares the database (creates tables or add columns)

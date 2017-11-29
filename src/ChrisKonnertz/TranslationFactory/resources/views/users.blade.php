@@ -38,10 +38,15 @@
                             {{ $user->created_at }}
                         </td>
                         <td>
-                            @if ($user->{'translation_factory'.'_activated'})
-                                <span title="true">✓</span>
+                            @if (in_array($user->id, $adminIds))
+                                <span title="True">✓</span> (Admin)
                             @else
-                                <span title="false">🞪</span>
+                                @if ($user->{$dbPrefix.'_activated'})
+                                    <span title="True">✓</span>
+                                @else
+                                    <span title="False">🞪</span>
+                                @endif
+                                <a class="btn" href="{{ url('/translation-factory/users/'.$user->id.'/toggle-activation') }}">Toggle</a>
                             @endif
                         </td>
                     </tr>

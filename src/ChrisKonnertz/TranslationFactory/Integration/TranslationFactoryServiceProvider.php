@@ -78,6 +78,8 @@ class TranslationFactoryServiceProvider extends ServiceProvider
 
             $controllerName = UsersController::class;
             $router->get('translation-factory/users', $controllerName . '@index');
+            $router->get('translation-factory/users/{id}/toggle-activation', $controllerName . '@toggleActivation')
+                ->where('id', '[0-9]+');
         });
     }
 

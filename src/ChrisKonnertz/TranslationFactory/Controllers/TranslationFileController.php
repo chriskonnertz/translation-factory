@@ -15,7 +15,7 @@ class TranslationFileController extends AuthController
      * Index page of the package
      *
      * @param string $hash The hash value that identifies the translation bag
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function index(string $hash)
     {
@@ -39,7 +39,7 @@ class TranslationFileController extends AuthController
      *
      * @param string $hash           The hash value that identifies the translation bag
      * @param string $currentItemKey The key of the current translation item (in dot notation)
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function edit(string $hash, string $currentItemKey)
     {

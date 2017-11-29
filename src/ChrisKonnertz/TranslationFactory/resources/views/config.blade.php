@@ -33,9 +33,9 @@
                                 <span class="label">{!! implode('</span>, <span class="label">', $configValue) !!}</span>
                             @elseif (is_bool($configValue))
                                 @if ($configValue)
-                                    <span title="true">✓</span>
+                                    <span title="True">✓</span>
                                 @else
-                                    <span title="false">🞪</span>
+                                    <span title="False">🞪</span>
                                 @endif
                             @else
                                 {{ $configValue }}

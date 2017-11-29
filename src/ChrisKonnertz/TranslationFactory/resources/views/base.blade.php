@@ -304,6 +304,10 @@
         </noscript>
 
         <section id="content">
+            @if (\Session::has('message'))
+                <div class="toast toast-info">{{ \Session::get('message') }}</div>
+            @endif
+
             @section('content')
                 Hello, world!
             @show
@@ -322,7 +326,7 @@
             var hamburger = document.querySelector('#sidebar .hamburger');
             var nav = document.getElementById('nav');
 
-            hamburger.addEventListener('click', function(event)
+            hamburger.addEventListener('click', function()
             {
                 nav.classList.toggle('visible');
             });
