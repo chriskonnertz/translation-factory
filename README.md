@@ -5,7 +5,7 @@
 Translation Factory is a tool for the Laravel framework that helps to create and manage translations.
 Especially it helps to coordinate multiple translators, aiding them with AI translations.
 
-![Screenshot](dev/prev_page_translating.png)
+![Screenshot](dev/prev_page_translation.png)
 
 > Note: "Factory" does not mean the pattern here but rather this: 🏭
 
