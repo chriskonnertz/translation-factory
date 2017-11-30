@@ -122,9 +122,6 @@ class TranslationFileController extends AuthController
      */
     public function getBagByHash(TranslationReaderInterface $translationReader, string $hash)
     {
-        # TODO remove this ensureAuth() call?
-        #$this->ensureAuth();
-
         $translationBags = $translationReader->readAll();
 
         $currentBag = null;
