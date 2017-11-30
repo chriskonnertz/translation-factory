@@ -18,7 +18,7 @@ Especially it helps to coordinate multiple translators, aiding them with AI tran
 * Exclusively made for Laravel which makes the installation a piece of cake
 * Highly configurable and easy to extend
 * Open source and free even for commercial use
-
+ 
 ## Installation
 
 > This library requires PHP 7.0 or higher with the cURL extension and Laravel 5.5.
