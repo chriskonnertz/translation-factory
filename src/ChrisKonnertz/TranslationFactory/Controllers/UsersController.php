@@ -2,11 +2,9 @@
 
 namespace ChrisKonnertz\TranslationFactory\Controllers;
 
-use ChrisKonnertz\TranslationFactory\IO\TranslationReaderInterface;
 use ChrisKonnertz\TranslationFactory\TranslationFactory;
-use Illuminate\Config\Repository as Config;
 use Illuminate\Http\Request;
-use Illuminate\Log\Writer as Log;
+use Illuminate\Session\TokenMismatchException;
 
 class UsersController extends AuthController
 {
@@ -38,10 +36,17 @@ class UsersController extends AuthController
      * @param Request $request
      * @param int     $id
      * @return \Illuminate\View\View
+     * @throws TokenMismatchException
      */
     public function toggleActivation(Request $request, int $id)
     {
         $this->ensurePermission();
+
+        // Ensure the CSRF token of the link URL is correct
+        if ($request->get('_token') !== csrf_token())
+        {
+            throw new TokenMismatchException;
+        }
 
         /** @var TranslationFactory $translationFactory */
         $translationFactory = app()->get('translation-factory');

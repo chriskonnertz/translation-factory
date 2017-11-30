@@ -142,6 +142,7 @@ class UserManager implements UserManagerInterface
             // Add a column to the users table that decides if a user is activated
             Schema::table('users', function ($table) {
                 $table->boolean(TranslationFactory::DB_PREFIX.'_activated')->default(false);
+                $table->integer(TranslationFactory::DB_PREFIX.'_counter')->default(0);
             });
         }
     }

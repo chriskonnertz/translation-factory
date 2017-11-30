@@ -4,7 +4,6 @@ namespace ChrisKonnertz\TranslationFactory\Controllers;
 
 use ChrisKonnertz\TranslationFactory\IO\TranslationReaderInterface;
 use ChrisKonnertz\TranslationFactory\TranslationFactory;
-use Illuminate\Config\Repository as Config;
 use Illuminate\Http\Request;
 use Illuminate\Log\Writer as Log;
 
@@ -103,6 +102,10 @@ class TranslationFileController extends AuthController
         $translationWriter->write($translationBag);
 
         if ($this->config->get(TranslationFactory::CONFIG_NAME.'.user_authentication') === true) {
+            $user = $translationFactory->getUserManager()->getCurrentUser();
+            $user->{TranslationFactory::DB_PREFIX.'_counter'} = $user->{TranslationFactory::DB_PREFIX.'_counter'} + 1;
+            $user->save();
+
             $log->info('User with ID '.$translationFactory->getUserManager()->getCurrentUserId().
                 ' translated item "'.$currentItemKey.'" of file "'.$translationBag->getBaseFile().'" from "'.
                 $translationBag->getBaseLanguage().'" into "'.$translationFactory->getTargetLanguage().'"');

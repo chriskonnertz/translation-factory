@@ -7,7 +7,7 @@
         <h1>Accounts</h1>
 
         <p class="page-info-text">
-            See the accounts of all registered translators.
+            Manage the accounts of all registered translators.
         </p>
     </div>
 
@@ -19,6 +19,7 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Registered at</th>
+                    <th>Translations</th>
                     <th>Activated</th>
                 </tr>
             </thead>
@@ -38,6 +39,9 @@
                             {{ $user->created_at }}
                         </td>
                         <td>
+                            {{ $user->{$dbPrefix.'_counter'} }}
+                        </td>
+                        <td>
                             @if (in_array($user->id, $adminIds))
                                 <span title="True">✓</span> (Admin)
                             @else
@@ -46,7 +50,7 @@
                                 @else
                                     <span title="False">🞪</span>
                                 @endif
-                                <a class="btn" href="{{ url('/translation-factory/users/'.$user->id.'/toggle-activation') }}">Toggle</a>
+                                <a class="btn" href="{{ url('/translation-factory/users/'.$user->id.'/toggle-activation?_token='.csrf_token()) }}">Toggle</a>
                             @endif
                         </td>
                     </tr>

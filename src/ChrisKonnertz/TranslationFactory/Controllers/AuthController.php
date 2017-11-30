@@ -46,6 +46,11 @@ class AuthController extends BaseController
             }
 
             if (! $userManager->getCurrentUser()->{TranslationFactory::DB_PREFIX.'_activated'}) {
+                // Admins do not have to be activated
+                if ($userManager->isAdmin()) {
+                    return;
+                }
+
                 // Throwing an authentication exception is not 100% right
                 // (it should be an authorization exception) but easy to implement
                 $translationFactory->getUserManager()->throwAuthenticationException();
