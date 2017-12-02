@@ -73,7 +73,7 @@ class TranslationWriter implements TranslationWriterInterface
                 }
             }
 
-            $this->backup( $fileDir.$filename, $translationBag->getHash());
+            $this->backup($fileDir.$filename, $translationBag->getHash());
 
             $success = $this->filesystem->put($fileDir.$filename, $content);
             if ($success === false) {
