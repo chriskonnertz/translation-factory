@@ -17,7 +17,6 @@ Especially it helps to coordinate multiple translators, aiding them with AI tran
 * Well prepared for mobile devices (smartphones and tablets)
 * Highly configurable and easy to extend
 * Open source and free even for commercial use
-* Exclusively made for Laravel
  
 ## Installation
 
@@ -90,7 +89,7 @@ someones needs.
 ## FAQ
 
 * **Which languages can be auto-translated?** Here is a list: [Link](https://github.com/chriskonnertz/DeepLy#supported-languages)
-* **Why are characters missing in the auto-translation?** That is an issue of DeepL. Always verify the auto-translations!
+* **Why are characters missing in the auto-translation?** This is an issue of DeepL. Always verify the auto-translations!
 * **Does this also work with Laravel 5.4?** Maybe. Not tested, though. You would have to register the `TranslationFactoryServiceProvider`.
 * **Should I use [barryvdh/laravel-translation-manager](https://github.com/barryvdh/laravel-translation-manager)?**
 LTM offers some features that help to handle translations, for example finding translations that are missing in the
