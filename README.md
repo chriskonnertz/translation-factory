@@ -1,5 +1,7 @@
 # Laravel Translation Factory
 
+
+[![Laravel](https://img.shields.io/badge/laravel-5.5-orange.svg)](https://laravel.com/)
 [![Version](https://img.shields.io/packagist/v/chriskonnertz/translation-factory.svg)](https://packagist.org/packages/chriskonnertz/translation-factory)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/chriskonnertz/translation-factory/master/LICENSE)
 
