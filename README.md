@@ -1,5 +1,6 @@
 # Laravel Translation Factory
 
+[![Version](https://img.shields.io/packagist/v/chriskonnertz/translation-factory.svg)](https://packagist.org/packages/chriskonnertz/translation-factory)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/chriskonnertz/translation-factory/master/LICENSE)
 
 Translation Factory is a tool for the Laravel framework that helps to create and manage translations.
