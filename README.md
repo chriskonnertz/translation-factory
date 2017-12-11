@@ -102,4 +102,4 @@ translations files. That makes it a good addition to Translation Factory. Transl
 * **I got this exception: "SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was too long; max key length is 767 bytes"**
 Here is a solution: [Link](https://laravel-news.com/laravel-5-4-key-too-long-error)
 * **What library is used for the auto-translations?** [DeepLy](https://github.com/chriskonnertz/DeepLy)
-* **How can I auto-translated all of ym translation files?** [Laravel Localization Automation](https://github.com/javidalpe/laravel-localization-automation) might be worth a look.
+* **How can I auto-translated all of my translation files?** [Laravel Localization Automation](https://github.com/javidalpe/laravel-localization-automation) might be worth a look.
