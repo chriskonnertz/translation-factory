@@ -34,7 +34,7 @@ composer require chriskonnertz/translation-factory
 Publish the assets via: `php artisan vendor:publish --provider="ChrisKonnertz\TranslationFactory\Integration\TranslationFactoryServiceProvider`
 
 Make sure Translation Factory can write into the output directories, especially you should make the
-translation directory make writable, for example `resources/lang`.
+translation directory writable, for example `resources/lang`.
 
 If you do not want to enable support of user accounts, that's it. 
 Navigate to `http://<your-domain>/translation-factory` to start. 
