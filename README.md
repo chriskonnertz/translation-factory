@@ -23,7 +23,7 @@ Especially it helps to coordinate multiple translators, aiding them with AI tran
  
 ## Installation
 
-> This library requires PHP 7.0 or higher with the cURL extension and Laravel 5.5.
+> This library requires PHP 7.0 or higher with the cURL extension and Laravel >= 5.5.
 
 Through [Composer](https://getcomposer.org/):
 
