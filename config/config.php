@@ -50,7 +50,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | If making backups is enabled, this property defines the absolute
-    | path of the backup directory. If it doe not exists, it will
+    | path of the backup directory. If it does not exists, it will
     | automatically be created. Ensure write access is given.
     |
     */
