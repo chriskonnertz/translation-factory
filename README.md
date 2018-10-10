@@ -71,7 +71,7 @@ If you want to use Translation Factory to let external translators translate you
 1. Setup a new server with your application. The server has to be reachable from the outside
 2. Make sure Translation Factory can write into the output directories
 3. Configure everything, especially enable user authentication
-4. Create your own account and then add id to the admins list in the config file
+4. Create your own account and then add it to the admins list in the config file
 5. Let the externals create their user accounts (`http://<your-domain>/register`)
 6. Activate the accounts of the translators
 7. Spread the link: `http://<your-domain>/translation-factory`
