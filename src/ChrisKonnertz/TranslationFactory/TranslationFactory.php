@@ -10,6 +10,9 @@ use ChrisKonnertz\TranslationFactory\User\UserManagerInterface;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Contracts\Cache\Repository as Cache;
 
+/**
+ * Translation Factory main class
+ */
 class TranslationFactory
 {
 
