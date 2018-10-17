@@ -91,7 +91,7 @@ class TranslationFactory
 
     /**
      * Decides if a text in the given source language can be auto-translated to the given target language.
-     * This depends on two things: Does the DeepL API support the languages and does the DeeLy API client support them?
+     * This depends on two factors: Does the DeepL API support the languages and does the DeepLy API client support them?
      *
      * @param string $sourceLanguage The language code of the source language, for example 'en'
      * @param string $targetLanguage The language code of the target language, for example 'de'
