@@ -6,7 +6,7 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/chriskonnertz/translation-factory/master/LICENSE)
 
 Translation Factory is a tool for the Laravel framework that helps to create and manage translations.
-Especially it helps to coordinate multiple translators, aiding them with AI translations.
+Especially it helps to coordinate multiple translators and translators that do not want to edit PHP files, aiding them with AI translations.
 
 [![Screenshot](dev/gifvid.gif)](dev/gifvid.gif)
 
