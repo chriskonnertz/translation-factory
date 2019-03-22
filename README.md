@@ -75,6 +75,7 @@ If you want to use Translation Factory to let external translators translate you
 5. Let the externals create their user accounts (`http://<your-domain>/register`)
 6. Activate the accounts of the translators
 7. Spread the link: `http://<your-domain>/translation-factory`
+8. Happy translating!
 
 ## Backups
 
@@ -93,7 +94,7 @@ someones needs.
 
 * **Which languages can be auto-translated?** Here is a list: [Link](https://github.com/chriskonnertz/DeepLy#supported-languages)
 * **Why are characters missing in the auto-translation?** This is an issue of DeepL. Always verify the auto-translations!
-* **Does this also work with Laravel 5.4?** Maybe. Not tested, though. You would have to register the `TranslationFactoryServiceProvider`.
+* **Does this also work with Laravel < 5.5?** Maybe. Not tested, though. You would have to register the `TranslationFactoryServiceProvider`.
 * **Should I use [barryvdh/laravel-translation-manager](https://github.com/barryvdh/laravel-translation-manager)?**
 LTM offers some features that help to handle translations, for example finding translations that are missing in the
 translations files. That makes it a good addition to Translation Factory. Translation Factory on the other hand is
